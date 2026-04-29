@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nanna's Story | The Stable Heirloom</title>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-
+ 
 body{
   background:#120a07;
   font-family:'Crimson Text',serif;
@@ -19,10 +19,15 @@ body{
   justify-content:center;
   padding:40px 16px;
 }
-
+ 
 /* ── BOOK WRAPPER ── */
-.book-wrap{width:100%;max-width:980px;position:relative;}
-
+.book-wrap{
+  width:100%;
+  max-width:980px;
+  position:relative;
+}
+ 
+/* The open book */
 .book{
   width:100%;
   aspect-ratio:1.55/1;
@@ -33,8 +38,8 @@ body{
   box-shadow:0 30px 80px rgba(0,0,0,0.95),0 8px 24px rgba(0,0,0,0.7);
   overflow:hidden;
 }
-
-/* Pages */
+ 
+/* Left & right page panels */
 .page{
   flex:1;
   background:#eaddca;
@@ -46,209 +51,207 @@ body{
   overflow:hidden;
   position:relative;
 }
-.page-left{border-right:1px solid rgba(0,0,0,0.1);box-shadow:inset -12px 0 28px rgba(0,0,0,0.08);}
-.page-right{box-shadow:inset 12px 0 28px rgba(0,0,0,0.08);}
-
-/* Spine */
-.spine{
-  position:absolute;left:50%;top:0;bottom:0;width:40px;
-  transform:translateX(-50%);
-  background:linear-gradient(to right,rgba(0,0,0,0.0) 0%,rgba(0,0,0,0.18) 45%,rgba(0,0,0,0.18) 55%,rgba(0,0,0,0.0) 100%);
-  z-index:10;pointer-events:none;
+ 
+.page-left{
+  border-right:1px solid rgba(0,0,0,0.1);
+  box-shadow:inset -12px 0 28px rgba(0,0,0,0.08);
 }
-
-/* Page turner */
-.page-turner{position:absolute;top:0;width:50%;height:100%;z-index:20;pointer-events:none;transform-origin:left center;display:none;}
-.page-turner.right-turn{left:50%;transform-origin:left center;background:#eaddca;background-image:url('https://www.transparenttextures.com/patterns/parchment.png');}
-.page-turner.left-turn{left:0%;transform-origin:right center;background:#eaddca;background-image:url('https://www.transparenttextures.com/patterns/parchment.png');}
-.page-turner::after{content:'';position:absolute;inset:0;background:linear-gradient(to left,rgba(0,0,0,0.0) 30%,rgba(0,0,0,0.28) 80%,rgba(0,0,0,0.42) 100%);pointer-events:none;}
-.page-turner.left-turn::after{background:linear-gradient(to right,rgba(0,0,0,0.0) 30%,rgba(0,0,0,0.28) 80%,rgba(0,0,0,0.42) 100%);}
-
-.page-shadow{position:absolute;top:0;height:100%;width:40%;z-index:19;pointer-events:none;opacity:0;display:none;}
-.page-shadow.shadow-right{left:50%;background:linear-gradient(to right,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.0) 100%);}
-.page-shadow.shadow-left{right:50%;background:linear-gradient(to left,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.0) 100%);}
-
+ 
+.page-right{
+  box-shadow:inset 12px 0 28px rgba(0,0,0,0.08);
+}
+ 
+/* Spine overlay */
+.spine{
+  position:absolute;
+  left:50%;
+  top:0;bottom:0;
+  width:40px;
+  transform:translateX(-50%);
+  background:linear-gradient(to right,
+    rgba(0,0,0,0.0) 0%,
+    rgba(0,0,0,0.18) 45%,
+    rgba(0,0,0,0.18) 55%,
+    rgba(0,0,0,0.0) 100%);
+  z-index:10;
+  pointer-events:none;
+}
+ 
+/* ── PAGE TURN OVERLAY ──
+   A half-page div that animates from scaleX(1)→scaleX(0) (forward)
+   or scaleX(0)→scaleX(1) (backward), with a gradient to simulate curl */
+.page-turner{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:100%;
+  z-index:20;
+  pointer-events:none;
+  transform-origin:left center;
+  display:none;
+}
+ 
+.page-turner.right-turn{
+  left:50%;
+  transform-origin:left center;
+  background:#eaddca;
+  background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
+}
+ 
+.page-turner.left-turn{
+  left:0%;
+  transform-origin:right center;
+  background:#eaddca;
+  background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
+}
+ 
+/* Curl shadow inside the turning page */
+.page-turner::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to left,
+    rgba(0,0,0,0.0) 30%,
+    rgba(0,0,0,0.28) 80%,
+    rgba(0,0,0,0.42) 100%);
+  pointer-events:none;
+}
+ 
+.page-turner.left-turn::after{
+  background:linear-gradient(to right,
+    rgba(0,0,0,0.0) 30%,
+    rgba(0,0,0,0.28) 80%,
+    rgba(0,0,0,0.42) 100%);
+}
+ 
+/* Shadow that falls on the static page beneath */
+.page-shadow{
+  position:absolute;
+  top:0;
+  height:100%;
+  width:40%;
+  z-index:19;
+  pointer-events:none;
+  opacity:0;
+  display:none;
+}
+ 
+.page-shadow.shadow-right{
+  left:50%;
+  background:linear-gradient(to right,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.0) 100%);
+}
+ 
+.page-shadow.shadow-left{
+  right:50%;
+  background:linear-gradient(to left,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0.0) 100%);
+}
+ 
 /* ── TYPOGRAPHY ── */
 h1,h2,h3,h4{font-family:'Great Vibes',cursive;color:#5d4037;margin-bottom:12px;}
 h1.title-main{color:#2b1b12;font-size:3rem;line-height:1.1;}
+ 
 p{font-size:1.08rem;line-height:1.65;margin-bottom:10px;color:#2b1e16;}
+ 
 .subtitle{font-size:0.7rem;text-transform:uppercase;letter-spacing:2.5px;opacity:0.5;margin-bottom:10px;}
-.handwritten{font-style:italic;font-size:1.05rem;line-height:1.7;color:#3d2b1f;}
+ 
+.handwritten{font-style:italic;font-size:1.12rem;line-height:1.7;color:#3d2b1f;}
 .handwritten p{margin-bottom:9px;}
+ 
 hr{border:none;border-top:1px solid rgba(0,0,0,0.12);margin:12px 0;}
-
-/* ── ENHANCEMENT 1: POLAROID PHOTOS ── */
-.polaroid-wrap{
-  display:inline-block;
-  background:#fffdf4;
-  border:1px solid #e8dfc8;
-  padding:7px 7px 28px;
-  box-shadow:2px 4px 12px rgba(0,0,0,0.22);
-  position:relative;
-  transition:transform 0.3s ease,box-shadow 0.3s ease;
-  cursor:pointer;
-}
-.polaroid-wrap:hover{transform:rotate(0deg) scale(1.04)!important;box-shadow:4px 8px 20px rgba(0,0,0,0.32);}
-.polaroid-wrap img{display:block;width:100%;height:140px;object-fit:cover;filter:sepia(0.55) contrast(0.92);}
-.polaroid-caption{
-  position:absolute;bottom:6px;left:0;right:0;
-  text-align:center;
-  font-family:'Caveat',cursive;
-  font-size:0.82rem;
-  color:#5d4037;
-}
-
-/* ── ENHANCEMENT 2: WAX SEAL ── */
-.wax-seal{
-  width:64px;height:64px;
-  background:radial-gradient(circle at 38% 35%, #c62828, #6d0000);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.45),inset 0 1px 3px rgba(255,180,120,0.2);
-  cursor:pointer;
-  transition:transform 0.35s ease,box-shadow 0.35s ease;
-  position:relative;
-  flex-shrink:0;
-}
-.wax-seal:hover{transform:rotate(8deg) scale(1.1);box-shadow:0 6px 18px rgba(0,0,0,0.5);}
-.wax-seal-inner{
-  width:48px;height:48px;border-radius:50%;
-  border:1.5px solid rgba(255,200,150,0.25);
-  display:flex;align-items:center;justify-content:center;
-}
-.wax-seal-letter{font-family:'Great Vibes',cursive;font-size:1.5rem;color:rgba(255,230,200,0.85);}
-
-/* ── ENHANCEMENT 3: INK-REVEAL HOVER QUOTES ── */
-.ink-quote{
-  font-style:italic;font-size:1.05rem;line-height:1.7;
-  color:#3d2b1f;cursor:default;display:block;margin-bottom:9px;
-}
-.ink-quote span{position:relative;display:inline;}
-.ink-quote span::after{
-  content:'';position:absolute;bottom:-1px;left:0;
-  width:0;height:1.5px;
-  background:linear-gradient(to right,#8d6e63,#c5a059);
-  transition:width 0.5s ease;
-}
-.ink-quote:hover span::after{width:100%;}
-
-/* ── ENHANCEMENT 4: TORN PAGE EDGE (bottom of left page) ── */
-.torn-edge{
-  position:absolute;bottom:0;left:0;right:0;
-  height:18px;pointer-events:none;z-index:5;
-}
-.torn-edge svg{display:block;width:100%;height:18px;}
-
-/* ── ENHANCEMENT 5: STICKY NOTE ── */
-.sticky-note{
-  background:#fef3a0;
-  padding:10px 12px;
-  transform:rotate(1.8deg);
-  box-shadow:2px 3px 8px rgba(0,0,0,0.18);
-  font-family:'Caveat',cursive;
-  font-size:0.95rem;
-  color:#4e3c00;
-  line-height:1.5;
-  cursor:pointer;
-  transition:transform 0.25s ease,box-shadow 0.25s ease;
-  margin-top:10px;
-  position:relative;
-}
-.sticky-note::before{
-  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
-  width:28px;height:10px;
-  background:rgba(255,240,140,0.7);
-  box-shadow:0 1px 3px rgba(0,0,0,0.15);
-}
-.sticky-note:hover{transform:rotate(0deg) scale(1.03);box-shadow:4px 6px 14px rgba(0,0,0,0.24);}
-
-/* ── ENHANCEMENT 6: COFFEE RING STAINS ── */
-.coffee-stain{
-  position:absolute;
-  border-radius:50%;
-  pointer-events:none;
-  border:5px solid rgba(110,65,20,0.12);
-  box-shadow:inset 0 0 0 2px rgba(110,65,20,0.09);
-}
-.coffee-stain::after{
-  content:'';position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  border:2px solid rgba(110,65,20,0.07);
-}
-
-/* ── ENHANCEMENT 7: GOLD LOCKET ── */
-.locket-wrap{display:flex;flex-direction:column;align-items:center;cursor:pointer;margin-top:6px;}
-.locket-chain-svg{width:40px;height:22px;}
-.locket-body{
-  width:58px;height:58px;
-  border-radius:50%;
-  border:2px solid #c5a059;
-  background:radial-gradient(circle at 38% 35%, #f5e6b2, #b8860b 80%);
-  box-shadow:0 2px 10px rgba(0,0,0,0.35),inset 0 1px 4px rgba(255,240,180,0.5);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform 0.4s ease;
-  position:relative;
-  overflow:hidden;
-}
-.locket-wrap:hover .locket-body{transform:scale(1.1) rotate(5deg);}
-.locket-front{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity 0.4s ease,transform 0.4s ease;
-  font-size:1.5rem;
-}
-.locket-back{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;
-  transform:scale(0.6);
-  transition:opacity 0.4s ease,transform 0.4s ease;
-  font-family:'Caveat',cursive;
-  font-size:0.6rem;
-  color:#4e2c00;
-  text-align:center;
-  padding:6px;
-  line-height:1.3;
-}
-.locket-wrap.open .locket-front{opacity:0;transform:scale(0.6);}
-.locket-wrap.open .locket-back{opacity:1;transform:scale(1);}
-.locket-label{font-family:'Caveat',cursive;font-size:0.72rem;color:#8d6e63;margin-top:4px;text-align:center;}
-
-/* ── FIELD NOTES ── */
+ 
 .field-notes{
-  background:rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.2);
   border:1px solid rgba(0,0,0,0.07);
   border-radius:3px;
-  padding:12px 15px;
+  padding:14px 16px;
   margin-top:10px;
-  font-size:1.02rem;
+  font-size:1.05rem;
   line-height:1.6;
 }
-
+ 
+.scrapbook-img{
+  width:100%;
+  max-height:220px;
+  object-fit:cover;
+  border:5px solid #fff;
+  box-shadow:2px 3px 10px rgba(0,0,0,0.25);
+  margin-bottom:16px;
+  display:block;
+  filter:sepia(0.6) contrast(0.9);
+}
+ 
+.rotate-l{transform:rotate(-1.5deg);}
+.rotate-r{transform:rotate(1.5deg);}
+ 
 /* ── NAV ── */
-.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px;}
+.nav-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:auto;
+  padding-top:16px;
+}
+ 
 .btn-flip{
-  background:none;border:none;border-bottom:1px solid #c5a059;
-  color:#2b1b12;font-family:'Crimson Text',serif;font-size:0.78rem;
-  text-transform:uppercase;letter-spacing:2px;cursor:pointer;padding:0 0 3px;
+  background:none;
+  border:none;
+  border-bottom:1px solid #c5a059;
+  color:#2b1b12;
+  font-family:'Crimson Text',serif;
+  font-size:0.78rem;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  cursor:pointer;
+  padding:0 0 3px;
   transition:color 0.2s;
 }
 .btn-flip:hover{color:#c5a059;}
 .btn-flip:disabled{opacity:0.25;cursor:default;border-bottom-color:rgba(0,0,0,0.15);}
-
+ 
 /* ── DOTS ── */
-.dots{display:flex;gap:9px;justify-content:center;margin-top:20px;}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(197,160,89,0.2);border:1px solid #c5a059;cursor:pointer;transition:background 0.25s,transform 0.2s;}
+.dots{
+  display:flex;
+  gap:9px;
+  justify-content:center;
+  margin-top:20px;
+}
+.dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:rgba(197,160,89,0.2);
+  border:1px solid #c5a059;
+  cursor:pointer;
+  transition:background 0.25s,transform 0.2s;
+}
 .dot.on{background:#c5a059;transform:scale(1.25);}
-
-/* Corner curl */
-.corner{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 48px 48px;border-color:transparent transparent rgba(197,160,89,0.5) transparent;cursor:pointer;z-index:30;transition:border-width 0.2s;}
+ 
+/* Corner page-curl hint */
+.corner{
+  position:absolute;
+  bottom:0;right:0;
+  width:0;height:0;
+  border-style:solid;
+  border-width:0 0 48px 48px;
+  border-color:transparent transparent rgba(197,160,89,0.5) transparent;
+  cursor:pointer;
+  z-index:30;
+  transition:border-width 0.2s;
+}
 .corner:hover{border-width:0 0 62px 62px;border-color:transparent transparent rgba(197,160,89,0.8) transparent;}
-.corner-left{position:absolute;bottom:0;left:0;width:0;height:0;border-style:solid;border-width:48px 48px 0 0;border-color:transparent rgba(197,160,89,0.5) transparent transparent;cursor:pointer;z-index:30;transition:border-width 0.2s;}
+ 
+.corner-left{
+  position:absolute;
+  bottom:0;left:0;
+  width:0;height:0;
+  border-style:solid;
+  border-width:48px 48px 0 0;
+  border-color:transparent rgba(197,160,89,0.5) transparent transparent;
+  cursor:pointer;
+  z-index:30;
+  transition:border-width 0.2s;
+}
 .corner-left:hover{border-width:62px 62px 0 0;border-color:transparent rgba(197,160,89,0.8) transparent transparent;}
-
+ 
 @media(max-width:600px){
   .book{flex-direction:column;aspect-ratio:auto;border-radius:6px;}
   .page{padding:28px 22px;}
@@ -258,24 +261,35 @@ hr{border:none;border-top:1px solid rgba(0,0,0,0.12);margin:12px 0;}
 </style>
 </head>
 <body>
-
+<a href="index.html" style="display:block; margin-top:14px; text-align:center; font-family:'Crimson Text',serif; font-size:0.78rem; color:rgba(197,160,89,0.5); text-decoration:none; letter-spacing:1px;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(197,160,89,0.5)'">← back to index</a>
+ 
 <div class="book-wrap">
   <div class="book" id="book">
     <div class="page page-left"  id="pageL"></div>
     <div class="page page-right" id="pageR"></div>
+ 
+    <!-- The sweeping page-turn flap -->
     <div class="page-turner" id="turner"></div>
-    <div class="page-shadow"  id="pShadow"></div>
+ 
+    <!-- Shadow cast on the underlying page -->
+    <div class="page-shadow" id="pShadow"></div>
+ 
     <div class="spine"></div>
+ 
     <div class="corner"      id="cornerR"></div>
-    <div class="corner-left" id="cornerL"></div>
+    <div
+$0 class="corner-left" id="cornerL"></div>
   </div>
   <div class="dots" id="dots"></div>
 </div>
-
+ 
 <script>
 (function(){
-  var TOTAL=5, cur=0, busy=false, DUR=480;
-
+  var TOTAL = 5;
+  var cur   = 0;
+  var busy  = false;
+  var DUR   = 480; // ms
+ 
   var pageL   = document.getElementById('pageL');
   var pageR   = document.getElementById('pageR');
   var turner  = document.getElementById('turner');
@@ -283,845 +297,94 @@ hr{border:none;border-top:1px solid rgba(0,0,0,0.12);margin:12px 0;}
   var cornerR = document.getElementById('cornerR');
   var cornerL = document.getElementById('cornerL');
   var dotsEl  = document.getElementById('dots');
-
-  /* ── torn edge SVG ── */
-  var tornSVG = `<div class="torn-edge"><svg viewBox="0 0 500 18" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 15,10 30,3 45,12 60,4 75,14 90,5 105,11 120,2 135,9 150,14 165,5 180,12 195,3 210,10 225,6 240,13 255,4 270,11 285,7 300,14 315,3 330,10 345,5 360,13 375,6 390,12 405,4 420,11 435,7 450,14 465,3 480,10 500,6 500,18 0,18" fill="#eaddca"/></svg></div>`;
-
-  /* ── coffee stain helper ── */
-  function coffeeStain(top,left,size,opacity){
-    return `<div class="coffee-stain" style="top:${top}px;left:${left}px;width:${size}px;height:${size}px;opacity:${opacity};"></div>`;
-  }
-
-  /* ── Rich illustrated scenes ── */
-  var scenes = {
-
-    /* Nanna portrait — elderly woman at kitchen table, warm lamp light */
-    nanna: `<svg viewBox="0 0 220 155" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <defs><radialGradient id="lamp" cx="72%" cy="30%" r="55%"><stop offset="0%" stop-color="#f0d080" stop-opacity="0.55"/><stop offset="100%" stop-color="#c8944a" stop-opacity="0"/></radialGradient></defs>
-      <!-- warm bg wall -->
-      <rect width="220" height="155" fill="#b07840"/>
-      <rect x="0" y="100" width="220" height="55" fill="#7a4e20"/>
-      <!-- wallpaper stripe suggestion -->
-      <line x1="0" y1="0" x2="0" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="22" y1="0" x2="22" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="44" y1="0" x2="44" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="66" y1="0" x2="66" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="88" y1="0" x2="88" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="110" y1="0" x2="110" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="132" y1="0" x2="132" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="154" y1="0" x2="154" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="176" y1="0" x2="176" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <line x1="198" y1="0" x2="198" y2="100" stroke="#c08840" stroke-width="18" opacity=".35"/>
-      <!-- lamp glow overlay -->
-      <rect width="220" height="155" fill="url(#lamp)"/>
-      <!-- table -->
-      <rect x="30" y="102" width="160" height="10" rx="2" fill="#5a3810"/>
-      <rect x="55" y="112" width="8" height="38" fill="#4a2e0c"/>
-      <rect x="157" y="112" width="8" height="38" fill="#4a2e0c"/>
-      <!-- bowl on table -->
-      <ellipse cx="155" cy="103" rx="18" ry="7" fill="#c8742a"/>
-      <ellipse cx="155" cy="100" rx="18" ry="6" fill="#d4843a"/>
-      <ellipse cx="155" cy="99" rx="14" ry="4" fill="#e8a050" opacity=".6"/>
-      <!-- cup -->
-      <rect x="82" y="93" width="14" height="12" rx="2" fill="#e8d8b0"/>
-      <path d="M96 97 Q102 97 102 103 Q102 107 96 107" fill="none" stroke="#c8b890" stroke-width="1.5"/>
-      <ellipse cx="89" cy="94" rx="7" ry="2.5" fill="#d0c8a0"/>
-      <!-- steam curls -->
-      <path d="M87 90 Q84 85 87 80" fill="none" stroke="#e8e0c8" stroke-width="1" opacity=".5"/>
-      <path d="M91 89 Q94 83 91 78" fill="none" stroke="#e8e0c8" stroke-width="1" opacity=".4"/>
-      <!-- NANNA body — seated, apron -->
-      <!-- dress/body -->
-      <path d="M88 150 Q84 120 80 108 Q90 104 110 104 Q130 104 140 108 Q136 120 132 150Z" fill="#4a3060"/>
-      <!-- apron -->
-      <path d="M95 150 Q93 125 91 112 Q110 108 129 112 Q127 125 125 150Z" fill="#e8d8b8" opacity=".85"/>
-      <!-- apron bow at waist -->
-      <ellipse cx="110" cy="118" rx="12" ry="4" fill="#e0c89a"/>
-      <path d="M98 118 Q94 114 96 110" fill="none" stroke="#e0c89a" stroke-width="2"/>
-      <path d="M122 118 Q126 114 124 110" fill="none" stroke="#e0c89a" stroke-width="2"/>
-      <!-- neck -->
-      <rect x="105" y="90" width="10" height="14" rx="4" fill="#c8905a"/>
-      <!-- head -->
-      <ellipse cx="110" cy="80" rx="18" ry="20" fill="#c8905a"/>
-      <!-- white hair — fluffy bun style -->
-      <ellipse cx="110" cy="62" rx="20" ry="14" fill="#e8e4dc"/>
-      <ellipse cx="96" cy="68" rx="10" ry="8" fill="#dedad2"/>
-      <ellipse cx="124" cy="68" rx="10" ry="8" fill="#dedad2"/>
-      <ellipse cx="110" cy="58" rx="14" ry="10" fill="#f0ece6"/>
-      <!-- bun -->
-      <ellipse cx="110" cy="57" rx="9" ry="7" fill="#e0dbd2"/>
-      <!-- face details -->
-      <!-- eyes — gentle, slightly tired, kind -->
-      <ellipse cx="103" cy="80" rx="3.5" ry="2.5" fill="#f5e8d5"/>
-      <ellipse cx="117" cy="80" rx="3.5" ry="2.5" fill="#f5e8d5"/>
-      <ellipse cx="103" cy="80" rx="2.2" ry="1.8" fill="#4a2e10"/>
-      <ellipse cx="117" cy="80" rx="2.2" ry="1.8" fill="#4a2e10"/>
-      <circle cx="104" cy="79.5" r="0.7" fill="#fff" opacity=".7"/>
-      <circle cx="118" cy="79.5" r="0.7" fill="#fff" opacity=".7"/>
-      <!-- crow's feet / gentle wrinkles -->
-      <path d="M107 79 Q110 78 113 79" fill="none" stroke="#b07848" stroke-width="0.5" opacity=".5"/>
-      <path d="M100 82 Q98 80 99 78" fill="none" stroke="#b07848" stroke-width="0.5" opacity=".4"/>
-      <path d="M120 82 Q122 80 121 78" fill="none" stroke="#b07848" stroke-width="0.5" opacity=".4"/>
-      <!-- nose -->
-      <path d="M108 83 Q110 86 112 83" fill="none" stroke="#a06840" stroke-width="1" opacity=".6"/>
-      <!-- warm smile -->
-      <path d="M104 89 Q110 94 116 89" fill="none" stroke="#9a5830" stroke-width="1.5"/>
-      <!-- rosy cheeks -->
-      <ellipse cx="100" cy="86" rx="5" ry="3" fill="#d4826a" opacity=".25"/>
-      <ellipse cx="120" cy="86" rx="5" ry="3" fill="#d4826a" opacity=".25"/>
-      <!-- glasses -->
-      <ellipse cx="103" cy="80" rx="6" ry="5" fill="none" stroke="#5a3820" stroke-width="1.2"/>
-      <ellipse cx="117" cy="80" rx="6" ry="5" fill="none" stroke="#5a3820" stroke-width="1.2"/>
-      <line x1="109" y1="80" x2="111" y2="80" stroke="#5a3820" stroke-width="1.2"/>
-      <line x1="97" y1="80" x2="93" y2="78" stroke="#5a3820" stroke-width="1"/>
-      <line x1="123" y1="80" x2="127" y2="78" stroke="#5a3820" stroke-width="1"/>
-      <!-- left arm — holding wooden spoon -->
-      <path d="M88 108 Q78 118 72 128" fill="none" stroke="#c8905a" stroke-width="7" stroke-linecap="round"/>
-      <line x1="72" y1="128" x2="66" y2="148" stroke="#7a4e18" stroke-width="2.5" stroke-linecap="round"/>
-      <ellipse cx="68" cy="150" rx="5" ry="3" fill="#8a5c20" opacity=".7"/>
-      <!-- right arm resting on table -->
-      <path d="M132 108 Q142 116 148 120" fill="none" stroke="#c8905a" stroke-width="7" stroke-linecap="round"/>
-      <!-- window behind left -->
-      <rect x="5" y="10" width="38" height="52" rx="2" fill="#b8d4f0" opacity=".5" stroke="#8a6030" stroke-width="1.5"/>
-      <line x1="24" y1="10" x2="24" y2="62" stroke="#8a6030" stroke-width="1"/>
-      <line x1="5" y1="36" x2="43" y2="36" stroke="#8a6030" stroke-width="1"/>
-      <!-- curtain left -->
-      <path d="M5 10 Q2 30 5 62" fill="#c87840" opacity=".5"/>
-      <path d="M43 10 Q46 30 43 62" fill="#c87840" opacity=".5"/>
-    </svg>`,
-
-    /* Young Nanna in the kitchen — 1954, vibrant, at the stove */
-    kitchen: `<svg viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <defs><radialGradient id="stoveglow" cx="40%" cy="60%" r="50%"><stop offset="0%" stop-color="#f08030" stop-opacity="0.4"/><stop offset="100%" stop-color="#c07030" stop-opacity="0"/></radialGradient></defs>
-      <!-- floor and wall -->
-      <rect width="220" height="145" fill="#d4a860"/>
-      <rect x="0" y="95" width="220" height="50" fill="#8a5c24"/>
-      <!-- checkerboard floor hint -->
-      <rect x="0" y="110" width="22" height="22" fill="#7a5020" opacity=".4"/>
-      <rect x="44" y="110" width="22" height="22" fill="#7a5020" opacity=".4"/>
-      <rect x="88" y="110" width="22" height="22" fill="#7a5020" opacity=".4"/>
-      <rect x="132" y="110" width="22" height="22" fill="#7a5020" opacity=".4"/>
-      <rect x="176" y="110" width="22" height="22" fill="#7a5020" opacity=".4"/>
-      <rect x="22" y="132" width="22" height="13" fill="#7a5020" opacity=".4"/>
-      <rect x="66" y="132" width="22" height="13" fill="#7a5020" opacity=".4"/>
-      <rect x="110" y="132" width="22" height="13" fill="#7a5020" opacity=".4"/>
-      <rect x="154" y="132" width="22" height="13" fill="#7a5020" opacity=".4"/>
-      <!-- big cast iron stove -->
-      <rect x="10" y="58" width="78" height="46" rx="3" fill="#3a3030" stroke="#201818" stroke-width="1.5"/>
-      <rect x="14" y="62" width="70" height="20" rx="2" fill="#2a2020"/>
-      <circle cx="28" cy="72" r="9" fill="#1a1010" stroke="#4a3030" stroke-width="1"/>
-      <circle cx="28" cy="72" r="5" fill="#c04020" opacity=".7"/>
-      <circle cx="56" cy="72" r="9" fill="#1a1010" stroke="#4a3030" stroke-width="1"/>
-      <circle cx="56" cy="72" r="5" fill="#c04020" opacity=".5"/>
-      <rect x="14" y="84" width="70" height="18" rx="1" fill="#2e2424" stroke="#1a1818" stroke-width="1"/>
-      <!-- oven door handle -->
-      <rect x="34" y="88" width="30" height="4" rx="2" fill="#8a7060"/>
-      <!-- stove glow -->
-      <rect x="10" y="58" width="78" height="46" fill="url(#stoveglow)"/>
-      <!-- big pot on stove -->
-      <ellipse cx="28" cy="62" rx="14" ry="5" fill="#4a3828"/>
-      <ellipse cx="28" cy="60" rx="14" ry="4.5" fill="#5a4838"/>
-      <!-- steam -->
-      <path d="M22 55 Q19 48 22 41" fill="none" stroke="#e8e0d0" stroke-width="1.5" opacity=".5"/>
-      <path d="M28 53 Q31 46 28 39" fill="none" stroke="#e8e0d0" stroke-width="1.5" opacity=".4"/>
-      <path d="M34 55 Q37 48 34 41" fill="none" stroke="#e8e0d0" stroke-width="1.5" opacity=".4"/>
-      <!-- kitchen shelf with jars -->
-      <rect x="110" y="20" width="100" height="6" rx="1" fill="#7a5020"/>
-      <rect x="116" y="8" width="12" height="12" rx="1" fill="#c8d870" stroke="#8a9030" stroke-width="1"/>
-      <rect x="132" y="10" width="10" height="10" rx="1" fill="#d4905a" stroke="#9a6030" stroke-width="1"/>
-      <rect x="146" y="7" width="14" height="13" rx="1" fill="#e8d880" stroke="#a89040" stroke-width="1"/>
-      <rect x="164" y="9" width="11" height="11" rx="1" fill="#b8d8a0" stroke="#789050" stroke-width="1"/>
-      <rect x="179" y="11" width="10" height="9" rx="1" fill="#d4c890" stroke="#a09848" stroke-width="1"/>
-      <!-- window -->
-      <rect x="118" y="30" width="50" height="40" rx="2" fill="#c8e4f8" opacity=".8" stroke="#7a5020" stroke-width="1.5"/>
-      <line x1="143" y1="30" x2="143" y2="70" stroke="#7a5020" stroke-width="1"/>
-      <line x1="118" y1="50" x2="168" y2="50" stroke="#7a5020" stroke-width="1"/>
-      <!-- outside-window greenery -->
-      <ellipse cx="130" cy="40" rx="9" ry="8" fill="#6a9030" opacity=".6"/>
-      <ellipse cx="155" cy="38" rx="8" ry="7" fill="#5a8020" opacity=".5"/>
-      <!-- YOUNG NANNA — 1950s housewife, dark hair, apron, stirring -->
-      <!-- body dress - 50s style full skirt -->
-      <path d="M94 145 Q88 115 84 100 Q100 95 116 95 Q132 95 136 100 Q132 115 126 145Z" fill="#5a6898"/>
-      <!-- full skirt flare -->
-      <path d="M86 118 Q75 125 72 145 L126 145 Q122 125 114 118Z" fill="#6878a8" opacity=".8"/>
-      <!-- apron -->
-      <path d="M98 145 Q96 118 94 104 Q105 100 116 100 Q127 100 126 104 Q124 118 122 145Z" fill="#f0e8d0" opacity=".9"/>
-      <rect x="100" y="103" width="30" height="5" rx="1" fill="#e0d0b0"/>
-      <!-- apron bow strings at sides -->
-      <path d="M94 108 Q86 106 82 112" fill="none" stroke="#f0e8d0" stroke-width="1.5"/>
-      <path d="M126 108 Q134 106 138 112" fill="none" stroke="#f0e8d0" stroke-width="1.5"/>
-      <!-- right arm reaching to stove, stirring -->
-      <path d="M94 100 Q80 96 68 92" fill="none" stroke="#c8906a" stroke-width="7" stroke-linecap="round"/>
-      <!-- wooden spoon -->
-      <line x1="68" y1="92" x2="44" y2="68" stroke="#9a6830" stroke-width="2.5" stroke-linecap="round"/>
-      <ellipse cx="42" cy="66" rx="5" ry="3.5" fill="#7a5020" opacity=".8"/>
-      <!-- left arm at side -->
-      <path d="M126 100 Q136 108 140 118" fill="none" stroke="#c8906a" stroke-width="7" stroke-linecap="round"/>
-      <!-- neck -->
-      <rect x="108" y="80" width="10" height="16" rx="4" fill="#c8906a"/>
-      <!-- collar / blouse neckline -->
-      <path d="M104 96 Q113 100 122 96" fill="none" stroke="#e0d0b0" stroke-width="1.5"/>
-      <!-- head -->
-      <ellipse cx="113" cy="68" rx="17" ry="18" fill="#c8906a"/>
-      <!-- dark hair — 1950s style, waves pinned up -->
-      <ellipse cx="113" cy="53" rx="19" ry="13" fill="#2a1a0a"/>
-      <ellipse cx="97" cy="60" rx="8" ry="10" fill="#2a1a0a"/>
-      <ellipse cx="129" cy="60" rx="8" ry="9" fill="#2a1a0a"/>
-      <!-- hair wave detail -->
-      <path d="M96 56 Q102 52 108 56 Q114 60 120 56 Q126 52 130 56" fill="none" stroke="#4a3020" stroke-width="1" opacity=".5"/>
-      <!-- hair pin -->
-      <line x1="118" y1="52" x2="126" y2="50" stroke="#c5a059" stroke-width="1.5"/>
-      <circle cx="126" cy="50" r="2" fill="#c5a059"/>
-      <!-- young face — bright eyes, rosy cheeks, small smile -->
-      <ellipse cx="106" cy="68" rx="3" ry="2.5" fill="#f5e0c8"/>
-      <ellipse cx="120" cy="68" rx="3" ry="2.5" fill="#f5e0c8"/>
-      <ellipse cx="106" cy="68" rx="1.8" ry="1.6" fill="#2a1808"/>
-      <ellipse cx="120" cy="68" rx="1.8" ry="1.6" fill="#2a1808"/>
-      <circle cx="106.8" cy="67.4" r="0.6" fill="#fff" opacity=".8"/>
-      <circle cx="120.8" cy="67.4" r="0.6" fill="#fff" opacity=".8"/>
-      <!-- lashes top -->
-      <path d="M103 66 Q106 64 109 66" fill="none" stroke="#2a1808" stroke-width="0.8"/>
-      <path d="M117 66 Q120 64 123 66" fill="none" stroke="#2a1808" stroke-width="0.8"/>
-      <!-- nose -->
-      <path d="M111 72 Q113 75 115 72" fill="none" stroke="#a07050" stroke-width="0.8" opacity=".6"/>
-      <!-- bright smile -->
-      <path d="M107 76 Q113 81 119 76" fill="none" stroke="#9a5838" stroke-width="1.5"/>
-      <!-- rosy cheeks -->
-      <ellipse cx="100" cy="73" rx="5" ry="3" fill="#d8806a" opacity=".28"/>
-      <ellipse cx="126" cy="73" rx="5" ry="3" fill="#d8806a" opacity=".28"/>
-      <!-- eyebrows — arched, young -->
-      <path d="M102 63 Q106 61 110 63" fill="none" stroke="#2a1808" stroke-width="1.2"/>
-      <path d="M116 63 Q120 61 124 63" fill="none" stroke="#2a1808" stroke-width="1.2"/>
-    </svg>`,
-
-    /* Valley field at golden hour — man walking crop rows */
-    field: `<svg viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <defs><radialGradient id="sun" cx="82%" cy="18%" r="40%"><stop offset="0%" stop-color="#f8d060" stop-opacity="0.7"/><stop offset="60%" stop-color="#e89030" stop-opacity="0.2"/><stop offset="100%" stop-color="#c07020" stop-opacity="0"/></radialGradient></defs>
-      <!-- sky gradient suggestion via layered rects -->
-      <rect width="220" height="145" fill="#d4aa58"/>
-      <rect width="220" height="80" fill="#c89040" opacity=".5"/>
-      <rect width="220" height="50" fill="#e8b850" opacity=".3"/>
-      <!-- sun disk -->
-      <circle cx="180" cy="26" r="20" fill="#f0c840" opacity=".9"/>
-      <circle cx="180" cy="26" r="14" fill="#f8e060"/>
-      <!-- sun rays -->
-      <line x1="180" y1="2" x2="180" y2="10" stroke="#f8d860" stroke-width="1.5" opacity=".6"/>
-      <line x1="197" y1="9" x2="191" y2="15" stroke="#f8d860" stroke-width="1.5" opacity=".6"/>
-      <line x1="204" y1="26" x2="196" y2="26" stroke="#f8d860" stroke-width="1.5" opacity=".6"/>
-      <line x1="163" y1="9" x2="169" y2="15" stroke="#f8d860" stroke-width="1.5" opacity=".6"/>
-      <line x1="156" y1="26" x2="164" y2="26" stroke="#f8d860" stroke-width="1.5" opacity=".6"/>
-      <rect fill="url(#sun)" width="220" height="145"/>
-      <!-- rolling hills horizon -->
-      <ellipse cx="60" cy="90" rx="90" ry="30" fill="#9aaa30" opacity=".5"/>
-      <ellipse cx="170" cy="85" rx="80" ry="28" fill="#8a9a28" opacity=".4"/>
-      <!-- ground / field -->
-      <rect x="0" y="88" width="220" height="57" fill="#7a5c18"/>
-      <!-- crop rows — perspective lines -->
-      <line x1="110" y1="88" x2="10" y2="145" stroke="#9a7820" stroke-width="1.5" opacity=".7"/>
-      <line x1="110" y1="88" x2="50" y2="145" stroke="#9a7820" stroke-width="1.5" opacity=".7"/>
-      <line x1="110" y1="88" x2="90" y2="145" stroke="#9a7820" stroke-width="1.5" opacity=".7"/>
-      <line x1="110" y1="88" x2="130" y2="145" stroke="#9a7820" stroke-width="1.5" opacity=".7"/>
-      <line x1="110" y1="88" x2="170" y2="145" stroke="#9a7820" stroke-width="1.5" opacity=".7"/>
-      <line x1="110" y1="88" x2="210" y2="145" stroke="#9a7820" stroke-width="1.5" opacity=".7"/>
-      <!-- crop plants along rows -->
-      <ellipse cx="50" cy="118" rx="7" ry="5" fill="#6a8820" opacity=".8"/>
-      <ellipse cx="72" cy="112" rx="6" ry="4" fill="#6a8820" opacity=".7"/>
-      <ellipse cx="95" cy="107" rx="5" ry="3.5" fill="#6a8820" opacity=".7"/>
-      <ellipse cx="150" cy="107" rx="5" ry="3.5" fill="#6a8820" opacity=".7"/>
-      <ellipse cx="168" cy="112" rx="6" ry="4" fill="#6a8820" opacity=".7"/>
-      <ellipse cx="190" cy="118" rx="7" ry="5" fill="#6a8820" opacity=".8"/>
-      <!-- large oak tree left -->
-      <rect x="22" y="50" width="7" height="45" fill="#5a3e10"/>
-      <ellipse cx="26" cy="48" rx="22" ry="26" fill="#4a6818"/>
-      <ellipse cx="14" cy="60" rx="14" ry="18" fill="#3a5810" opacity=".8"/>
-      <ellipse cx="38" cy="55" rx="16" ry="20" fill="#5a7820" opacity=".7"/>
-      <!-- GRANDFATHER — silhouette, hat, boots, walking the rows -->
-      <!-- shadow -->
-      <ellipse cx="134" cy="138" rx="12" ry="4" fill="#4a3010" opacity=".4"/>
-      <!-- boots -->
-      <rect x="126" y="130" width="8" height="12" rx="2" fill="#3a2810"/>
-      <rect x="136" y="128" width="8" height="14" rx="2" fill="#3a2810"/>
-      <!-- trousers -->
-      <rect x="125" y="108" width="10" height="24" rx="2" fill="#4a5848"/>
-      <rect x="135" y="108" width="10" height="26" rx="2" fill="#4a5848"/>
-      <!-- coat/shirt -->
-      <rect x="122" y="86" width="24" height="26" rx="3" fill="#5a6858"/>
-      <!-- left arm forward, carrying hat-tool -->
-      <path d="M122 90 Q112 96 108 104" fill="none" stroke="#5a6858" stroke-width="6" stroke-linecap="round"/>
-      <!-- right arm back -->
-      <path d="M146 90 Q154 96 156 108" fill="none" stroke="#5a6858" stroke-width="6" stroke-linecap="round"/>
-      <!-- neck -->
-      <rect x="130" y="76" width="8" height="12" rx="3" fill="#c8906a"/>
-      <!-- head -->
-      <ellipse cx="134" cy="70" rx="12" ry="13" fill="#c8906a"/>
-      <!-- wide brim hat -->
-      <ellipse cx="134" cy="58" rx="18" ry="5" fill="#4a3010"/>
-      <ellipse cx="134" cy="55" rx="13" ry="8" fill="#5a4018"/>
-      <!-- barn in background -->
-      <rect x="160" y="68" width="45" height="32" fill="#8a3820"/>
-      <polygon points="160,68 182,50 205,68" fill="#6a2810"/>
-      <rect x="175" y="80" width="12" height="20" rx="1" fill="#3a1808"/>
-      <rect x="163" y="72" width="10" height="10" rx="1" fill="#c87030" opacity=".5"/>
-      <rect x="190" y="72" width="10" height="10" rx="1" fill="#c87030" opacity=".5"/>
-      <!-- fence line -->
-      <line x1="70" y1="90" x2="70" y2="106" stroke="#8a6020" stroke-width="1.5"/>
-      <line x1="82" y1="90" x2="82" y2="106" stroke="#8a6020" stroke-width="1.5"/>
-      <line x1="70" y1="95" x2="110" y2="95" stroke="#8a6020" stroke-width="1.2"/>
-      <line x1="70" y1="102" x2="110" y2="102" stroke="#8a6020" stroke-width="1"/>
-      <line x1="94" y1="90" x2="94" y2="106" stroke="#8a6020" stroke-width="1.5"/>
-    </svg>`,
-
-    /* Harvest festival — pumpkins, haystacks, market stalls, autumn colours */
-    harvest: `<svg viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <defs><radialGradient id="hsun" cx="75%" cy="15%" r="45%"><stop offset="0%" stop-color="#f8e080" stop-opacity="0.6"/><stop offset="100%" stop-color="#e09040" stop-opacity="0"/></radialGradient></defs>
-      <!-- sky -->
-      <rect width="220" height="145" fill="#e0a848"/>
-      <rect width="220" height="70" fill="#c88030" opacity=".4"/>
-      <rect fill="url(#hsun)" width="220" height="145"/>
-      <!-- clouds -->
-      <ellipse cx="40" cy="22" rx="28" ry="10" fill="#f0e0b0" opacity=".5"/>
-      <ellipse cx="26" cy="24" rx="16" ry="8" fill="#f0e0b0" opacity=".4"/>
-      <ellipse cx="55" cy="25" rx="14" ry="7" fill="#f0e0b0" opacity=".4"/>
-      <ellipse cx="155" cy="18" rx="20" ry="8" fill="#f0e0b0" opacity=".4"/>
-      <!-- ground -->
-      <rect x="0" y="88" width="220" height="57" fill="#7a5010"/>
-      <!-- scattered straw on ground -->
-      <line x1="10" y1="98" x2="30" y2="95" stroke="#c8a030" stroke-width="1" opacity=".6"/>
-      <line x1="50" y1="102" x2="72" y2="99" stroke="#c8a030" stroke-width="1" opacity=".5"/>
-      <line x1="140" y1="100" x2="165" y2="97" stroke="#c8a030" stroke-width="1" opacity=".6"/>
-      <line x1="180" y1="104" x2="200" y2="101" stroke="#c8a030" stroke-width="1" opacity=".5"/>
-      <!-- haystack 1 left -->
-      <ellipse cx="28" cy="102" rx="22" ry="14" fill="#d4a030"/>
-      <ellipse cx="28" cy="97" rx="18" ry="10" fill="#e0b040"/>
-      <ellipse cx="28" cy="93" rx="12" ry="7" fill="#e8c050"/>
-      <!-- haystack 2 right -->
-      <ellipse cx="190" cy="100" rx="18" ry="12" fill="#d4a030"/>
-      <ellipse cx="190" cy="96" rx="14" ry="8" fill="#e0b040"/>
-      <!-- PUMPKINS — varied sizes, grouped centre-left -->
-      <!-- big pumpkin -->
-      <ellipse cx="98" cy="114" rx="18" ry="14" fill="#d46820"/>
-      <ellipse cx="87" cy="112" rx="8" ry="11" fill="#c05c18" opacity=".6"/>
-      <ellipse cx="109" cy="112" rx="8" ry="11" fill="#c05c18" opacity=".6"/>
-      <ellipse cx="98" cy="114" rx="6" ry="10" fill="#e07828" opacity=".7"/>
-      <rect x="96" y="100" width="4" height="7" rx="2" fill="#3a5010"/>
-      <path d="M100 104 Q106 98 112 100" fill="none" stroke="#3a5010" stroke-width="1.5"/>
-      <!-- medium pumpkin -->
-      <ellipse cx="122" cy="118" rx="13" ry="10" fill="#c85c18"/>
-      <ellipse cx="115" cy="117" rx="6" ry="8" fill="#b05010" opacity=".6"/>
-      <ellipse cx="129" cy="117" rx="6" ry="8" fill="#b05010" opacity=".6"/>
-      <rect x="120" y="108" width="3" height="6" rx="1" fill="#3a5010"/>
-      <!-- small pumpkin -->
-      <ellipse cx="80" cy="120" rx="9" ry="7" fill="#d47028"/>
-      <ellipse cx="80" cy="120" rx="4" ry="6" fill="#e07830" opacity=".6"/>
-      <rect x="79" y="113" width="2.5" height="5" rx="1" fill="#3a5010"/>
-      <!-- market stall banner -->
-      <rect x="60" y="48" width="3" height="45" fill="#5a3810"/>
-      <rect x="155" y="48" width="3" height="45" fill="#5a3810"/>
-      <rect x="60" y="48" width="98" height="6" rx="1" fill="#8a3020"/>
-      <!-- bunting triangles -->
-      <polygon points="63,54 70,54 66.5,62" fill="#e84020" opacity=".8"/>
-      <polygon points="72,54 79,54 75.5,62" fill="#f8c020" opacity=".8"/>
-      <polygon points="81,54 88,54 84.5,62" fill="#2060c0" opacity=".7"/>
-      <polygon points="90,54 97,54 93.5,62" fill="#e84020" opacity=".8"/>
-      <polygon points="99,54 106,54 102.5,62" fill="#f8c020" opacity=".8"/>
-      <polygon points="108,54 115,54 111.5,62" fill="#2060c0" opacity=".7"/>
-      <polygon points="117,54 124,54 120.5,62" fill="#e84020" opacity=".8"/>
-      <polygon points="126,54 133,54 129.5,62" fill="#f8c020" opacity=".8"/>
-      <polygon points="135,54 142,54 138.5,62" fill="#2060c0" opacity=".7"/>
-      <polygon points="144,54 151,54 147.5,62" fill="#e84020" opacity=".8"/>
-      <!-- produce table -->
-      <rect x="62" y="76" width="94" height="16" rx="2" fill="#8a5020"/>
-      <rect x="65" y="68" width="88" height="10" rx="1" fill="#a06030"/>
-      <!-- items on table -->
-      <ellipse cx="78" cy="70" rx="7" ry="5" fill="#c83020" opacity=".9"/>
-      <ellipse cx="93" cy="70" rx="7" ry="5" fill="#c83020" opacity=".9"/>
-      <ellipse cx="108" cy="71" rx="6" ry="4" fill="#e89020" opacity=".9"/>
-      <ellipse cx="120" cy="70" rx="5" ry="4" fill="#60a020" opacity=".9"/>
-      <ellipse cx="133" cy="71" rx="7" ry="5" fill="#c83020" opacity=".9"/>
-      <ellipse cx="144" cy="70" rx="5" ry="4" fill="#e89020" opacity=".8"/>
-      <!-- autumn trees frame -->
-      <rect x="2" y="38" width="6" height="55" fill="#4a2e08"/>
-      <ellipse cx="5" cy="35" rx="16" ry="20" fill="#c84010" opacity=".8"/>
-      <ellipse cx="14" cy="28" rx="12" ry="16" fill="#d86020" opacity=".7"/>
-      <rect x="210" y="40" width="6" height="52" fill="#4a2e08"/>
-      <ellipse cx="213" cy="36" rx="14" ry="18" fill="#c04010" opacity=".8"/>
-      <ellipse cx="204" cy="30" rx="12" ry="15" fill="#d05020" opacity=".7"/>
-      <!-- falling leaves -->
-      <ellipse cx="48" cy="60" rx="4" ry="2.5" fill="#d86020" opacity=".7" transform="rotate(-30 48 60)"/>
-      <ellipse cx="170" cy="55" rx="3.5" ry="2" fill="#c84010" opacity=".6" transform="rotate(20 170 55)"/>
-      <ellipse cx="130" cy="45" rx="3" ry="1.8" fill="#e07030" opacity=".5" transform="rotate(-15 130 45)"/>
-    </svg>`,
-
-    /* Blueprint — proper architectural drawing, night-blue */
-    blueprint: `<svg viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <!-- deep blueprint bg with grid -->
-      <rect width="220" height="145" fill="#1a3050"/>
-      <!-- fine grid -->
-      <line x1="0" y1="10" x2="220" y2="10" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="20" x2="220" y2="20" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="30" x2="220" y2="30" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="40" x2="220" y2="40" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="50" x2="220" y2="50" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="60" x2="220" y2="60" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="70" x2="220" y2="70" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="80" x2="220" y2="80" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="90" x2="220" y2="90" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="100" x2="220" y2="100" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="110" x2="220" y2="110" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="120" x2="220" y2="120" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="0" y1="130" x2="220" y2="130" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="10" y1="0" x2="10" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="20" y1="0" x2="20" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="30" y1="0" x2="30" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="40" y1="0" x2="40" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="50" y1="0" x2="50" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="60" y1="0" x2="60" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="70" y1="0" x2="70" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="80" y1="0" x2="80" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="90" y1="0" x2="90" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="100" y1="0" x2="100" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="110" y1="0" x2="110" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="120" y1="0" x2="120" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="130" y1="0" x2="130" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="140" y1="0" x2="140" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="150" y1="0" x2="150" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="160" y1="0" x2="160" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="170" y1="0" x2="170" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="180" y1="0" x2="180" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="190" y1="0" x2="190" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="200" y1="0" x2="200" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <line x1="210" y1="0" x2="210" y2="145" stroke="#2a4870" stroke-width="0.5"/>
-      <!-- FLOOR PLAN walls — bright white-blue lines -->
-      <!-- outer wall -->
-      <rect x="18" y="14" width="184" height="110" fill="none" stroke="#a0c8f0" stroke-width="2"/>
-      <!-- kitchen room top-left -->
-      <rect x="18" y="14" width="90" height="65" fill="#1e3a60" opacity=".5" stroke="#a0c8f0" stroke-width="1.5"/>
-      <!-- kitchen label -->
-      <text x="40" y="34" font-size="6.5" fill="#c8e4ff" font-family="monospace" font-weight="bold">KITCHEN</text>
-      <!-- kitchen door arc -->
-      <path d="M84 79 Q84 62 100 62" fill="none" stroke="#88b8e8" stroke-width="1" stroke-dasharray="2,1.5"/>
-      <line x1="84" y1="79" x2="84" y2="62" stroke="#a0c8f0" stroke-width="1.5"/>
-      <!-- stove symbol in kitchen -->
-      <rect x="22" y="18" width="22" height="18" rx="1" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <circle cx="27" cy="23" r="3" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <circle cx="35" cy="23" r="3" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <circle cx="27" cy="31" r="3" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <circle cx="35" cy="31" r="3" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <!-- sink -->
-      <rect x="86" y="18" width="18" height="12" rx="1" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <circle cx="95" cy="24" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <!-- parlour bottom left -->
-      <rect x="18" y="79" width="90" height="45" fill="#1a3858" opacity=".5" stroke="#a0c8f0" stroke-width="1.5"/>
-      <text x="36" y="95" font-size="6.5" fill="#c8e4ff" font-family="monospace" font-weight="bold">PARLOUR</text>
-      <!-- fireplace symbol -->
-      <rect x="22" y="100" width="20" height="10" rx="1" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <rect x="25" y="102" width="14" height="7" rx="1" fill="#3060a0" opacity=".6"/>
-      <!-- dining room top right -->
-      <rect x="108" y="14" width="94" height="65" fill="#1e3a60" opacity=".5" stroke="#a0c8f0" stroke-width="1.5"/>
-      <text x="118" y="34" font-size="6.5" fill="#c8e4ff" font-family="monospace" font-weight="bold">DINING</text>
-      <!-- dining table -->
-      <rect x="125" y="40" width="40" height="24" rx="3" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <circle cx="130" cy="38" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <circle cx="145" cy="38" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <circle cx="160" cy="38" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <circle cx="130" cy="66" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <circle cx="145" cy="66" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <circle cx="160" cy="66" r="3" fill="none" stroke="#70a8e0" stroke-width="0.8"/>
-      <!-- hallway right -->
-      <rect x="108" y="79" width="94" height="45" fill="#182e50" opacity=".5" stroke="#a0c8f0" stroke-width="1.5"/>
-      <text x="120" y="95" font-size="6.5" fill="#c8e4ff" font-family="monospace" font-weight="bold">BEDROOM</text>
-      <!-- bed symbol -->
-      <rect x="160" y="88" width="28" height="20" rx="2" fill="none" stroke="#70a8e0" stroke-width="1"/>
-      <rect x="160" y="88" width="28" height="8" rx="2" fill="#2850a0" opacity=".5"/>
-      <!-- dimension lines -->
-      <line x1="18" y1="130" x2="202" y2="130" stroke="#60a0e0" stroke-width="0.8" marker-end="none"/>
-      <line x1="18" y1="127" x2="18" y2="133" stroke="#60a0e0" stroke-width="0.8"/>
-      <line x1="202" y1="127" x2="202" y2="133" stroke="#60a0e0" stroke-width="0.8"/>
-      <text x="95" y="139" font-size="5.5" fill="#80b0d8" font-family="monospace">42 ft</text>
-      <!-- title block -->
-      <text x="18" y="11" font-size="5" fill="#60a0e0" font-family="monospace">WILLOW CREEK HOMESTEAD — PLAN 1961 — SCALE 1:48</text>
-    </svg>`,
-
-    /* Kids at the kitchen counter — flour flying, bare feet */
-    kids: `<svg viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <defs><radialGradient id="winlight" cx="78%" cy="20%" r="55%"><stop offset="0%" stop-color="#f8f0d0" stop-opacity="0.5"/><stop offset="100%" stop-color="#d4a848" stop-opacity="0"/></radialGradient></defs>
-      <!-- warm kitchen wall -->
-      <rect width="220" height="145" fill="#c8a050"/>
-      <rect x="0" y="98" width="220" height="47" fill="#8a5c1a"/>
-      <!-- floor tiles -->
-      <rect x="0" y="118" width="28" height="27" fill="#7a5018" opacity=".5"/>
-      <rect x="56" y="118" width="28" height="27" fill="#7a5018" opacity=".5"/>
-      <rect x="112" y="118" width="28" height="27" fill="#7a5018" opacity=".5"/>
-      <rect x="168" y="118" width="28" height="27" fill="#7a5018" opacity=".5"/>
-      <rect fill="url(#winlight)" width="220" height="145"/>
-      <!-- tall window right -->
-      <rect x="162" y="10" width="48" height="72" rx="2" fill="#c8dff0" opacity=".75" stroke="#7a5020" stroke-width="2"/>
-      <line x1="186" y1="10" x2="186" y2="82" stroke="#7a5020" stroke-width="1.5"/>
-      <line x1="162" y1="46" x2="210" y2="46" stroke="#7a5020" stroke-width="1.5"/>
-      <!-- lace curtains -->
-      <path d="M162 10 Q155 30 162 50 Q155 70 162 82" fill="none" stroke="#f0ece0" stroke-width="3" opacity=".7"/>
-      <path d="M210 10 Q217 30 210 50 Q217 70 210 82" fill="none" stroke="#f0ece0" stroke-width="3" opacity=".7"/>
-      <!-- KITCHEN COUNTER — long, wooden -->
-      <rect x="10" y="90" width="200" height="14" rx="2" fill="#6a3e10" stroke="#4a2808" stroke-width="1"/>
-      <rect x="10" y="92" width="200" height="3" rx="1" fill="#8a5a20" opacity=".4"/>
-      <!-- counter items: mixing bowl, flour bag, rolling pin -->
-      <!-- flour cloud puffs -->
-      <ellipse cx="88" cy="84" rx="12" ry="6" fill="#f0ece8" opacity=".6"/>
-      <ellipse cx="100" cy="80" rx="9" ry="5" fill="#f0ece8" opacity=".5"/>
-      <ellipse cx="76" cy="82" rx="8" ry="4" fill="#f0ece8" opacity=".4"/>
-      <!-- big mixing bowl -->
-      <ellipse cx="95" cy="93" rx="22" ry="8" fill="#d4b880"/>
-      <ellipse cx="95" cy="90" rx="22" ry="7" fill="#e8ccA0"/>
-      <path d="M73 90 Q95 98 117 90" fill="#c8a870" opacity=".5"/>
-      <!-- flour bag left of bowl -->
-      <rect x="46" y="76" width="18" height="16" rx="2" fill="#f0ece0" stroke="#d0c8b0" stroke-width="1"/>
-      <rect x="48" y="82" width="14" height="5" rx="1" fill="#c8b890" opacity=".5"/>
-      <text x="50" y="79" font-size="4.5" fill="#9a8060" font-family="serif">FLOUR</text>
-      <!-- rolling pin -->
-      <rect x="125" y="87" width="40" height="7" rx="3.5" fill="#c8a060"/>
-      <rect x="121" y="88" width="6" height="5" rx="2" fill="#a07840"/>
-      <rect x="163" y="88" width="6" height="5" rx="2" fill="#a07840"/>
-      <!-- CHILD 1 — Thomas, left, reaching into bowl, raisin thief -->
-      <!-- sitting on counter stool -->
-      <rect x="25" y="100" width="22" height="45" rx="3" fill="#5a3e10"/>
-      <!-- legs dangling -->
-      <rect x="28" y="132" width="6" height="12" rx="3" fill="#c8906a"/>
-      <rect x="36" y="134" width="6" height="10" rx="3" fill="#c8906a"/>
-      <!-- bare feet (swinging) -->
-      <ellipse cx="31" cy="145" rx="4" ry="2.5" fill="#c8906a"/>
-      <ellipse cx="39" cy="146" rx="4" ry="2" fill="#c8906a"/>
-      <!-- thomas body shirt -->
-      <rect x="22" y="88" width="20" height="20" rx="3" fill="#3860a0"/>
-      <!-- suspenders -->
-      <line x1="26" y1="88" x2="29" y2="74" stroke="#c87020" stroke-width="2"/>
-      <line x1="38" y1="88" x2="35" y2="74" stroke="#c87020" stroke-width="2"/>
-      <!-- right arm reaching to bowl -->
-      <path d="M42 96 Q58 92 72 91" fill="none" stroke="#c8906a" stroke-width="6" stroke-linecap="round"/>
-      <!-- left arm at side -->
-      <path d="M22 96 Q14 100 12 108" fill="none" stroke="#c8906a" stroke-width="6" stroke-linecap="round"/>
-      <!-- head -->
-      <ellipse cx="32" cy="76" rx="12" ry="12" fill="#c8906a"/>
-      <!-- short hair, tousled brown -->
-      <ellipse cx="32" cy="66" rx="13" ry="9" fill="#4a2e08"/>
-      <ellipse cx="22" cy="72" rx="7" ry="7" fill="#4a2e08"/>
-      <ellipse cx="42" cy="72" rx="6" ry="6" fill="#4a2e08"/>
-      <!-- cheeky grin -->
-      <path d="M27 80 Q32 85 37 80" fill="none" stroke="#8a4828" stroke-width="1.5"/>
-      <ellipse cx="28" cy="75" rx="2" ry="1.5" fill="#3a2010"/>
-      <ellipse cx="36" cy="75" rx="2" ry="1.5" fill="#3a2010"/>
-      <!-- CHILD 2 — Mary, right, sprinkling flour dramatically -->
-      <rect x="142" y="100" width="22" height="45" rx="3" fill="#5a3e10"/>
-      <!-- legs dangling -->
-      <rect x="146" y="132" width="6" height="12" rx="3" fill="#c8906a"/>
-      <rect x="154" y="130" width="6" height="14" rx="3" fill="#c8906a"/>
-      <ellipse cx="149" cy="145" rx="4" ry="2.5" fill="#c8906a"/>
-      <ellipse cx="157" cy="145" rx="3.5" ry="2" fill="#c8906a"/>
-      <!-- mary body dress - pink -->
-      <path d="M138 108 Q136 94 152 92 Q166 94 164 108 Q158 118 152 120 Q146 118 138 108Z" fill="#d06080"/>
-      <!-- pigtails! -->
-      <ellipse cx="152" cy="72" rx="13" ry="12" fill="#c8906a"/>
-      <ellipse cx="152" cy="62" rx="14" ry="9" fill="#8a4820"/>
-      <ellipse cx="140" cy="68" rx="8" ry="7" fill="#8a4820"/>
-      <ellipse cx="164" cy="68" rx="8" ry="7" fill="#8a4820"/>
-      <!-- pigtail bows -->
-      <ellipse cx="140" cy="66" rx="5" ry="3" fill="#e84870" opacity=".8"/>
-      <ellipse cx="164" cy="66" rx="5" ry="3" fill="#e84870" opacity=".8"/>
-      <!-- mary face — big eyes, flour on nose -->
-      <ellipse cx="147" cy="73" rx="2.5" ry="2" fill="#3a2010"/>
-      <ellipse cx="157" cy="73" rx="2.5" ry="2" fill="#3a2010"/>
-      <circle cx="147.8" cy="72.4" r="0.7" fill="#fff" opacity=".8"/>
-      <circle cx="157.8" cy="72.4" r="0.7" fill="#fff" opacity=".8"/>
-      <path d="M148 78 Q152 82 156 78" fill="none" stroke="#8a4828" stroke-width="1.5"/>
-      <ellipse cx="152" cy="75" rx="3" ry="1.5" fill="#f0ece8" opacity=".7"/>
-      <!-- right arm raised HIGH sprinkling flour -->
-      <path d="M164 96 Q172 86 176 76" fill="none" stroke="#c8906a" stroke-width="6" stroke-linecap="round"/>
-      <!-- flour sprinkle from hand -->
-      <circle cx="178" cy="72" r="2" fill="#f0ece8" opacity=".8"/>
-      <circle cx="183" cy="68" r="1.5" fill="#f0ece8" opacity=".7"/>
-      <circle cx="172" cy="66" r="1.8" fill="#f0ece8" opacity=".6"/>
-      <circle cx="186" cy="74" r="1.2" fill="#f0ece8" opacity=".5"/>
-      <!-- NANNA (young) in background supervising, wiping hands on apron -->
-      <!-- just her torso/head visible behind counter -->
-      <rect x="104" y="54" width="22" height="38" rx="3" fill="#4a5898"/>
-      <ellipse cx="115" cy="52" rx="14" ry="14" fill="#c8906a"/>
-      <ellipse cx="115" cy="40" rx="15" ry="10" fill="#2a1a0a"/>
-      <ellipse cx="104" cy="46" rx="7" ry="8" fill="#2a1a0a"/>
-      <ellipse cx="126" cy="46" rx="7" ry="7" fill="#2a1a0a"/>
-      <!-- nanna smile watching kids -->
-      <path d="M110 56 Q115 61 120 56" fill="none" stroke="#9a5838" stroke-width="1.5"/>
-      <ellipse cx="110" cy="51" rx="2" ry="1.5" fill="#3a2010"/>
-      <ellipse cx="120" cy="51" rx="2" ry="1.5" fill="#3a2010"/>
-      <!-- her hands wiping apron -->
-      <rect x="104" y="76" width="22" height="16" rx="2" fill="#f0e8d0" opacity=".8"/>
-    </svg>`,
-
-    /* Golden years — Nanna older, standing at window, late afternoon light */
-    golden: `<svg viewBox="0 0 220 155" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;">
-      <defs><radialGradient id="goldwin" cx="78%" cy="35%" r="60%"><stop offset="0%" stop-color="#f8e080" stop-opacity="0.65"/><stop offset="70%" stop-color="#e09030" stop-opacity="0.2"/><stop offset="100%" stop-color="#c07020" stop-opacity="0"/></radialGradient></defs>
-      <!-- wall -->
-      <rect width="220" height="155" fill="#b07030"/>
-      <rect x="0" y="108" width="220" height="47" fill="#7a4c18"/>
-      <!-- wallpaper dots -->
-      <circle cx="15" cy="20" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="35" cy="20" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="55" cy="20" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="75" cy="20" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="95" cy="20" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="25" cy="38" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="45" cy="38" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="65" cy="38" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="85" cy="38" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="15" cy="56" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="35" cy="56" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="55" cy="56" r="2" fill="#c08030" opacity=".4"/>
-      <circle cx="75" cy="56" r="2" fill="#c08030" opacity=".4"/>
-      <!-- big window with golden light streaming -->
-      <rect x="130" y="8" width="78" height="90" rx="3" fill="#f8e898" opacity=".85" stroke="#6a4010" stroke-width="2.5"/>
-      <line x1="169" y1="8" x2="169" y2="98" stroke="#6a4010" stroke-width="2"/>
-      <line x1="130" y1="53" x2="208" y2="53" stroke="#6a4010" stroke-width="1.5"/>
-      <!-- window light rays -->
-      <rect fill="url(#goldwin)" width="220" height="155"/>
-      <!-- lace curtain left side of window -->
-      <path d="M130 8 Q122 28 130 53 Q122 68 130 98" fill="none" stroke="#f0ece0" stroke-width="4" opacity=".6"/>
-      <!-- curtain fabric puddle -->
-      <ellipse cx="128" cy="100" rx="8" ry="4" fill="#e8d8b8" opacity=".5"/>
-      <!-- outside scene in window — garden, tree -->
-      <rect x="132" y="10" width="75" height="41" fill="#9ab870" opacity=".5"/>
-      <ellipse cx="155" cy="28" rx="18" ry="20" fill="#5a8820" opacity=".7"/>
-      <ellipse cx="175" cy="24" rx="14" ry="17" fill="#4a7818" opacity=".6"/>
-      <rect x="152" y="42" width="5" height="12" fill="#4a3010"/>
-      <ellipse cx="190" cy="35" rx="10" ry="12" fill="#6a9830" opacity=".6"/>
-      <!-- shelf/mantle left with family photos -->
-      <rect x="8" y="54" width="100" height="6" rx="1" fill="#5a3810"/>
-      <!-- little framed photos on shelf -->
-      <rect x="14" y="40" width="14" height="16" rx="1" fill="#f0e8d0" stroke="#8a6020" stroke-width="1"/>
-      <rect x="16" y="42" width="10" height="10" fill="#c8b08a" opacity=".6"/>
-      <rect x="32" y="42" width="13" height="14" rx="1" fill="#f0e8d0" stroke="#8a6020" stroke-width="1"/>
-      <rect x="34" y="44" width="9" height="8" fill="#b8a07a" opacity=".6"/>
-      <rect x="50" y="38" width="16" height="18" rx="1" fill="#f0e8d0" stroke="#8a6020" stroke-width="1.5"/>
-      <rect x="52" y="40" width="12" height="12" fill="#c0a882" opacity=".6"/>
-      <rect x="70" y="42" width="12" height="14" rx="1" fill="#f0e8d0" stroke="#8a6020" stroke-width="1"/>
-      <rect x="72" y="44" width="8" height="8" fill="#b8a07a" opacity=".5"/>
-      <rect x="86" y="40" width="14" height="16" rx="1" fill="#f0e8d0" stroke="#8a6020" stroke-width="1"/>
-      <rect x="88" y="42" width="10" height="10" fill="#c8b08a" opacity=".6"/>
-      <!-- fireplace below shelf -->
-      <rect x="20" y="60" width="68" height="50" rx="2" fill="#3a2810" stroke="#2a1808" stroke-width="1.5"/>
-      <rect x="28" y="68" width="52" height="36" rx="1" fill="#1a0e06"/>
-      <!-- fire glow -->
-      <ellipse cx="54" cy="104" rx="18" ry="6" fill="#e07020" opacity=".5"/>
-      <ellipse cx="54" cy="100" rx="14" ry="8" fill="#e86020" opacity=".4"/>
-      <path d="M44 104 Q48 90 54 82 Q60 90 64 104" fill="#f07020" opacity=".5"/>
-      <path d="M48 104 Q52 93 56 86 Q60 93 62 104" fill="#f8a030" opacity=".6"/>
-      <path d="M50 104 Q54 95 58 100" fill="none" stroke="#f8c040" stroke-width="2" opacity=".7"/>
-      <!-- mantle clock -->
-      <rect x="52" y="46" width="16" height="10" rx="2" fill="#8a6030" stroke="#6a4818" stroke-width="1"/>
-      <circle cx="60" cy="51" r="4" fill="#e8d8b0" stroke="#6a4818" stroke-width="0.8"/>
-      <line x1="60" y1="49" x2="60" y2="52" stroke="#4a2e08" stroke-width="1"/>
-      <line x1="60" y1="51" x2="62" y2="51" stroke="#4a2e08" stroke-width="1"/>
-      <!-- OLDER NANNA — standing at window, peaceful, looking out -->
-      <!-- shadow at floor -->
-      <ellipse cx="118" cy="150" rx="14" ry="4" fill="#4a2e08" opacity=".35"/>
-      <!-- feet in slippers -->
-      <ellipse cx="112" cy="148" rx="8" ry="4" fill="#c8b890"/>
-      <ellipse cx="124" cy="149" rx="7" ry="3.5" fill="#c8b890"/>
-      <!-- dress — full, floral, older style -->
-      <path d="M98 155 Q95 128 93 112 Q106 106 118 106 Q130 106 143 112 Q141 128 138 155Z" fill="#7060a0"/>
-      <!-- floral pattern on dress -->
-      <circle cx="104" cy="120" r="3" fill="#d080a0" opacity=".6"/>
-      <circle cx="118" cy="128" r="3" fill="#d080a0" opacity=".5"/>
-      <circle cx="132" cy="118" r="2.5" fill="#d080a0" opacity=".5"/>
-      <circle cx="110" cy="138" r="2.5" fill="#c07090" opacity=".5"/>
-      <circle cx="126" cy="140" r="3" fill="#d080a0" opacity=".6"/>
-      <!-- cardigan over dress -->
-      <path d="M98 112 Q104 130 104 155" fill="none" stroke="#9080c0" stroke-width="5" stroke-linecap="round"/>
-      <path d="M138 112 Q132 130 132 155" fill="none" stroke="#9080c0" stroke-width="5" stroke-linecap="round"/>
-      <!-- right arm reaching to window sill -->
-      <path d="M138 112 Q148 110 156 108" fill="none" stroke="#c8906a" stroke-width="7" stroke-linecap="round"/>
-      <!-- left arm at chest holding something (cup of tea) -->
-      <path d="M98 112 Q92 118 90 128" fill="none" stroke="#c8906a" stroke-width="7" stroke-linecap="round"/>
-      <!-- teacup in left hand -->
-      <rect x="82" y="126" width="12" height="9" rx="2" fill="#e8d8b0"/>
-      <path d="M94 129 Q100 129 100 134 Q100 138 94 138" fill="none" stroke="#d0c090" stroke-width="1.5"/>
-      <!-- steam from cup -->
-      <path d="M86 124 Q84 120 86 116" fill="none" stroke="#e8e0d0" stroke-width="1" opacity=".5"/>
-      <path d="M90 123 Q92 119 90 115" fill="none" stroke="#e8e0d0" stroke-width="1" opacity=".4"/>
-      <!-- neck -->
-      <rect x="112" y="94" width="10" height="14" rx="4" fill="#c8906a"/>
-      <!-- head — slightly turned toward window -->
-      <ellipse cx="117" cy="82" rx="17" ry="19" fill="#c8906a"/>
-      <!-- white hair — fuller, soft bun, wispy -->
-      <ellipse cx="117" cy="66" rx="19" ry="13" fill="#e8e4dc"/>
-      <ellipse cx="104" cy="72" rx="10" ry="9" fill="#dedad4"/>
-      <ellipse cx="130" cy="72" rx="10" ry="8" fill="#dedad4"/>
-      <ellipse cx="117" cy="62" rx="14" ry="10" fill="#f0ece8"/>
-      <ellipse cx="117" cy="60" rx="9" ry="7" fill="#e4e0da"/>
-      <!-- wispy hair strands -->
-      <path d="M100 70 Q96 64 98 58" fill="none" stroke="#d8d4cc" stroke-width="1.5" opacity=".6"/>
-      <path d="M134 70 Q138 64 136 58" fill="none" stroke="#d8d4cc" stroke-width="1.5" opacity=".5"/>
-      <!-- face — gentle, looking toward window (slightly turned) -->
-      <ellipse cx="113" cy="82" rx="3" ry="2.5" fill="#f5e8d5"/>
-      <ellipse cx="124" cy="81" rx="3" ry="2.5" fill="#f5e8d5"/>
-      <ellipse cx="113" cy="82" rx="1.8" ry="1.6" fill="#4a2e10"/>
-      <ellipse cx="124" cy="81" rx="1.8" ry="1.6" fill="#4a2e10"/>
-      <circle cx="113.7" cy="81.4" r="0.6" fill="#fff" opacity=".7"/>
-      <circle cx="124.7" cy="80.4" r="0.6" fill="#fff" opacity=".7"/>
-      <!-- gentle wrinkles -->
-      <path d="M108 80 Q110 79 113 80" fill="none" stroke="#b07848" stroke-width="0.5" opacity=".5"/>
-      <path d="M121 79 Q124 78 126 79" fill="none" stroke="#b07848" stroke-width="0.5" opacity=".4"/>
-      <path d="M110 86 Q112 85 114 86" fill="none" stroke="#b07848" stroke-width="0.4" opacity=".4"/>
-      <!-- nose -->
-      <path d="M115 86 Q117 89 119 86" fill="none" stroke="#a06840" stroke-width="0.8" opacity=".5"/>
-      <!-- peaceful slight smile -->
-      <path d="M111 91 Q117 96 122 91" fill="none" stroke="#9a5830" stroke-width="1.5"/>
-      <!-- rosy older cheeks -->
-      <ellipse cx="107" cy="87" rx="5" ry="3" fill="#c87860" opacity=".2"/>
-      <ellipse cx="127" cy="86" rx="5" ry="3" fill="#c87860" opacity=".2"/>
-      <!-- reading glasses pushed up on head -->
-      <ellipse cx="113" cy="70" rx="5" ry="3.5" fill="none" stroke="#5a3820" stroke-width="1"/>
-      <ellipse cx="124" cy="70" rx="5" ry="3.5" fill="none" stroke="#5a3820" stroke-width="1"/>
-      <line x1="118" y1="70" x2="119" y2="70" stroke="#5a3820" stroke-width="1"/>
-      <!-- golden light catch on her hair -->
-      <ellipse cx="128" cy="65" rx="6" ry="4" fill="#f0d070" opacity=".25"/>
-    </svg>`
-  };
-
-  function polaroid(scene,caption,rot,maxH){
-    maxH = maxH||140;
-    var svgScene = scenes[scene] || scenes.kitchen;
-    return `<div class="polaroid-wrap" style="transform:rotate(${rot}deg);margin-bottom:14px;width:100%;">
-      <div style="height:${maxH}px;overflow:hidden;filter:sepia(0.55) contrast(0.92);">${svgScene}</div>
-      <div class="polaroid-caption">${caption}</div>
-    </div>`;
-  }
-
-  /* ── ink quote helper ── */
-  function inkQ(text){
-    return `<p class="ink-quote"><span>${text}</span></p>`;
-  }
-
-  /* ── spreads ── */
+ 
+  // ── Spread data ──────────────────────────────────────────
   var spreads = [
-    /* 0 — Cover */
     {
       left: `
-        ${coffeeStain(8,10,70,1)}
-        ${coffeeStain(18,55,44,0.7)}
-        ${polaroid('kitchen','Summer, 1954',-1.5,130)}
+        <img src="https://i.pinimg.com/736x/ee/09/c3/ee09c382c0b2a12409bec71c4310d431.jpg" class="scrapbook-img rotate-l" alt="">
         <h2>The First Fire</h2>
-        <p>It began in Willow Creek, 1954. The dust bowl years were fading, but the resolve they forged remained. Nanna always said a house isn't built of bricks, but of the steam rising from a Sunday roast.</p>
-        ${tornSVG}`,
+        <p>It began in Willow Creek, 1954. The dust bowl years were fading, but the resolve they forged remained. Nanna always said a house isn't built of bricks, but of the steam rising from a Sunday roast.</p>`,
       right: `
-        ${coffeeStain(-10,240,55,0.6)}
-        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;">
-          <div>
-            <h1 class="title-main">Nanna's Story</h1>
-            <p class="subtitle">Willow Creek, 1954 – Present</p>
-          </div>
-          <div style="flex-shrink:0;margin-top:6px;">
-            <div class="wax-seal" id="waxSeal1">
-              <div class="wax-seal-inner"><span class="wax-seal-letter">N</span></div>
-            </div>
-          </div>
-        </div>
+        <h1 class="title-main">Nanna's Story</h1>
+        <p class="subtitle">Willow Creek, 1954 – Present</p>
         <hr>
         <div class="handwritten" style="margin-top:6px;">
-          ${inkQ('"I remember the day your Grandfather brought home the heavy cast iron skillet. He said it was for emergencies, but I used it for everything."')}
-          ${inkQ('"We didn\'t have much, but our table was always full. There\'s always room for one more chair."')}
-        </div>
-        <div class="sticky-note" id="sticky0">✦ Tap the wax seal — it\'s a charm 🔴</div>`
+          <p>"I remember the day your Grandfather brought home the heavy cast iron skillet. He said it was for 'emergencies,' but I used it for everything, and fried chicken to chocolate cake."</p>
+          <p>"We didn't have much, but our table was always full. There's always room for one more chair."</p>
+          <img src="https://i.pinimg.com/736x/a8/4e/af/a84eafeb0a00e24aefdb219dc107bce8.jpg" 
+        
+        class="scrapbook-img" style="filter:sepia(0.3) contrast(1.1);border:4px solid #2b1b12;padding:4px; background:#c5a059;max-height:240px;" alt="">
+    
+        </div>`
     },
-    /* 1 — Valley Fields */
     {
       left: `
-        ${coffeeStain(6,200,52,0.8)}
         <h3>The Valley Fields</h3>
-        ${polaroid('harvest','Harvest morning, 1958',1.5,110)}
-        <p>The early mornings were for the farm. Your Grandfather would walk the rows long before sunrise, his boots heavy with the rich, black soil.</p>
-        ${tornSVG}`,
+        <img src="https://i.pinimg.com/736x/46/fb/20/46fb20a505fcf5526700f5d60894d19e.jpg" class="scrapbook-img rotate-r" alt="">
+        <p>The early mornings were for the farm. Your Grandfather would walk the rows long before sunrise, his boots heavy with the rich, black soil.</p>`,
       right: `
         <h2>The Barn's Reach</h2>
         <div class="handwritten">
-          ${inkQ('"Your Grandfather used to say the real work happened in the kitchen. Our old barn was just storage — but the kitchen… that\'s where the magic was."')}
-          ${inkQ('"Everything we ate had a face and a name. Every potato dug by hand. You don\'t just eat food like that — you honor it."')}
-        </div>
-        <div style="display:flex;align-items:center;gap:16px;margin-top:12px;">
-          <div class="locket-wrap" id="locket1">
-            <svg class="locket-chain-svg" viewBox="0 0 40 22"><path d="M20 2 Q10 10 8 20" stroke="#c5a059" stroke-width="1.5" fill="none"/><path d="M20 2 Q30 10 32 20" stroke="#c5a059" stroke-width="1.5" fill="none"/><circle cx="20" cy="2" r="2" fill="#c5a059"/></svg>
-            <div class="locket-body">
-              <div class="locket-front">♥</div>
-              <div class="locket-back">Always in my heart, always at my table.</div>
-            </div>
-            <div class="locket-label">click to open</div>
-          </div>
-          <p style="font-size:0.95rem;font-style:italic;color:#5d4037;flex:1;">"Our love was measured in meals shared, not words spoken."</p>
+          <p>"Your Grandfather used to say the real work happened in the kitchen. Our old barn was just storage, but the kitchen… that's where the magic was."</p>
+          <p>"Everything we ate had a face and a name. Every potato dug by hand. You don't just eat food like that, and you honor it."</p>
+          <img src="https://i.pinimg.com/736x/87/34/95/87349556e138002a8170381ada4608a1.jpg" class="scrapbook-img rotate-l" alt="">
         </div>`
     },
-    /* 2 — Blueprint */
     {
       left: `
         <h2>The Structure</h2>
-        <div style="width:100%;max-height:175px;overflow:hidden;filter:sepia(0.3) contrast(1.1);border:2px solid #2b1b12;padding:4px;background:#fdfdfd;display:block;margin-bottom:12px;">${scenes.blueprint}</div>
-        <p>This early schematic shows the original expansion. Note the double flue — essential for the heavy baking Nanna was starting to do.</p>
-        ${tornSVG}`,
+        <img src="https://i.pinimg.com/736x/0d/5d/f8/0d5df80d648842c83f84185564e98f6d.jpg" 
+        
+        class="scrapbook-img" style="filter:sepia(0.3) contrast(1.1);border:2px solid #2b1b12;padding:4px; background:#c5a059;max-height:370px;" alt="">
+        <p>This early schematic shows the original expansion. Note the double flue, essential for the heavy baking Nanna was starting to do.</p>`,
       right: `
-        ${coffeeStain(-8,160,60,0.7)}
         <h4 style="font-size:1.9rem;">Field Notes</h4>
         <div class="field-notes handwritten">
           <p>Foundations laid May 1961. River stone for the hearth. Timber from the back woods lot. Nanna insists on the large window facing the sunrise.</p>
         </div>
         <div class="handwritten" style="margin-top:12px;">
-          ${inkQ('"I drew this myself, sitting at the table. Every beam, every door — I wanted it warm. A place to linger, not just pass through."')}
-          ${inkQ('"The blueprint wasn\'t just for a room; it was the outline for our entire future."')}
+          <p>"I drew this myself, sitting at the table. Every beam, every door, and I wanted it warm. A place to linger, not just pass through."</p>
+          <p>"The blueprint wasn't just for a room; it was the outline for our entire future."</p>
+          
         </div>`
     },
-    /* 3 — Early Years */
     {
       left: `
-        ${coffeeStain(4,8,48,0.9)}
         <h3>The Early Years</h3>
-        ${polaroid('kids','Harvest Festival, 1965',-1,115)}
-        <p>By 1965 the kitchen had expanded — three kids, two dogs, and a constant rotation of neighbors. This photo was taken the morning of the Harvest Festival.</p>
-        ${tornSVG}`,
+        <img src="https://i.pinimg.com/736x/1c/48/e1/1c48e10a241a3bf875ba8dbe3f50c190.jpg" class="scrapbook-img rotate-l" alt="">
+        <p>By 1965 the kitchen had expanded — three kids, two dogs, and a constant rotation of neighbors. This photo was taken the morning of the Harvest Festival.</p>`,
       right: `
         <h2>Noise &amp; Flour</h2>
         <div class="handwritten">
-          ${inkQ('"The kids would sit on the counter, swinging their bare legs while I kneaded the dough. Thomas always tried to steal the raisins."')}
-          ${inkQ('"Those messy, noisy mornings were the heart of our life. It wasn\'t perfect, but it was ours."')}
-        </div>
-        <div class="sticky-note" style="transform:rotate(-1.2deg);">
-          📝 Mary's job: official flour-sprinkler.<br>Thomas's job: official raisin thief.
+          <p>"The kids would sit on the counter, swinging their bare legs while I kneaded the dough. Thomas always tried to steal the raisins, and Mary was the official flour-sprinkler."</p>
+          <p>"Those messy, noisy mornings were the heart of our life. It wasn't perfect, but it was ours."</p>
+          <img src="https://i.pinimg.com/1200x/4a/60/a1/4a60a18c601f64fea140039e700d4b9e.jpg" 
+        
+        class="scrapbook-img" style="filter:sepia(0.3) contrast(1.1);border:4px solid #2b1b12;padding:4px; background:#c5a059;max-height:200px;" alt="">
         </div>`
     },
-    /* 4 — Golden Years */
     {
       left: `
-        ${polaroid('golden','The golden kitchen, 1981',0.8,120)}
+        <img src="https://i.pinimg.com/736x/21/33/51/2133510a9e9d161b9ac8b10288ec6071.jpg" class="scrapbook-img" alt="">
         <h3>The Golden Years</h3>
-        <p>Eventually the flour dust settled, and the kids grew up. But the kitchen remained the center of the universe — every holiday, heartbreak, and victory came back here.</p>
-        ${tornSVG}`,
+        <p>Eventually the flour dust settled, and the kids grew up. But the kitchen remained the center of the universe — every holiday, heartbreak, and victory came back here.</p>`,
       right: `
         <h2>Passing the Torch</h2>
         <div class="handwritten">
-          ${inkQ('"Now my hands are a bit slower, and the oven takes longer to preheat. But when I see you standing where I once stood, holding that same wooden spoon… I know the story continues."')}
+          <p>"Now my hands are a bit slower, and the oven takes longer to preheat. But when I see you standing where I once stood, holding that same wooden spoon… I know the story continues."</p>
         </div>
         <hr>
         <div class="field-notes">
           <strong>Nanna's final tip:</strong> Never trust a recipe that doesn't let you taste as you go. Measuring is important, but instinct is divine.
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;">
-          <div style="font-family:'Great Vibes';font-size:2.2rem;color:#5d4037;">Love, Nanna</div>
-          <div class="locket-wrap" id="locket4" style="margin-top:0;">
-            <svg class="locket-chain-svg" viewBox="0 0 40 22"><path d="M20 2 Q10 10 8 20" stroke="#c5a059" stroke-width="1.5" fill="none"/><path d="M20 2 Q30 10 32 20" stroke="#c5a059" stroke-width="1.5" fill="none"/><circle cx="20" cy="2" r="2" fill="#c5a059"/></svg>
-            <div class="locket-body">
-              <div class="locket-front">♥</div>
-              <div class="locket-back">The story is yours now.</div>
-            </div>
-            <div class="locket-label">open me</div>
-          </div>
+        <div style="margin-top:14px;text-align:center;">
+          <div style="font-family:'Great Vibes';font-size:2rem;color:#5d4037;">Love, Nanna</div>
         </div>`
     }
   ];
-
-  /* ── Dots ── */
+ 
+  // ── Dots ────────────────────────────────────────────────
   for(var i=0;i<TOTAL;i++){
     (function(idx){
       var d=document.createElement('div');
@@ -1130,101 +393,157 @@ hr{border:none;border-top:1px solid rgba(0,0,0,0.12);margin:12px 0;}
       dotsEl.appendChild(d);
     })(i);
   }
+ 
   function updateDots(){
-    dotsEl.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===cur);});
+    var ds=dotsEl.querySelectorAll('.dot');
+    ds.forEach(function(d,i){ d.classList.toggle('on',i===cur); });
   }
-
-  function navHTML(idx){
-    var h='<div class="nav-row">';
-    h += idx>0 ? '<button class="btn-flip btn-prev">← Previous</button>' : '<span></span>';
-    h += idx<TOTAL-1 ? '<button class="btn-flip btn-next">Next Chapter →</button>' : '<span></span>';
-    return h+'</div>';
-  }
-
-  function attachInteractives(){
-    /* lockets */
-    document.querySelectorAll('.locket-wrap').forEach(function(el){
-      el.addEventListener('click',function(){el.classList.toggle('open');});
-    });
-    /* nav */
-    var btnN=document.querySelector('.btn-next');
-    var btnP=document.querySelector('.btn-prev');
-    if(btnN) btnN.addEventListener('click',next);
-    if(btnP) btnP.addEventListener('click',prev);
-  }
-
+ 
+  // ── Render a spread with no animation ───────────────────
   function render(idx){
     pageL.innerHTML = spreads[idx].left  + navHTML(idx);
-    pageR.innerHTML = spreads[idx].right;
-    attachInteractives();
+    pageR.innerHTML = spreads[idx].right + (idx===0?'':'');
+    // Attach nav button listeners
+    var btnN = pageL.querySelector('.btn-next')||pageR.querySelector('.btn-next');
+    var btnP = pageL.querySelector('.btn-prev')||pageR.querySelector('.btn-prev');
+    if(btnN) btnN.addEventListener('click', next);
+    if(btnP) btnP.addEventListener('click', prev);
     cornerL.style.visibility = idx===0?'hidden':'visible';
     cornerR.style.visibility = idx===TOTAL-1?'hidden':'visible';
     updateDots();
   }
-
-  /* ── FLIP FORWARD ── */
+ 
+  function navHTML(idx){
+    var html='<div class="nav-row">';
+    if(idx>0)       html+='<button class="btn-flip btn-prev">← Previous</button>';
+    else             html+='<span></span>';
+    if(idx<TOTAL-1) html+='<button class="btn-flip btn-next">Next Chapter →</button>';
+    else             html+='<span></span>';
+    html+='</div>';
+    return html;
+  }
+ 
+  // ── FLIP FORWARD ─────────────────────────────────────────
   function next(){
     if(busy||cur>=TOTAL-1) return;
     busy=true;
+ 
+    // Show incoming right page behind everything
     pageR.innerHTML = spreads[cur+1].right;
-    turner.className='page-turner right-turn';
-    turner.style.display='block';turner.style.left='50%';turner.style.width='50%';
-    turner.style.transformOrigin='left center';turner.style.transform='scaleX(1)';turner.style.transition='none';
-    pShadow.className='page-shadow shadow-right';pShadow.style.display='block';pShadow.style.opacity='0';pShadow.style.transition='none';
-    void turner.offsetWidth;
-    turner.style.transition='transform '+DUR+'ms cubic-bezier(0.4,0,0.6,1)';turner.style.transform='scaleX(0)';
-    pShadow.style.transition='opacity '+(DUR*0.6)+'ms ease-out '+(DUR*0.2)+'ms';pShadow.style.opacity='0.6';
+ 
+    // Set up turner on right half, full width, showing current right content
+    turner.className      = 'page-turner right-turn';
+    turner.style.display  = 'block';
+    turner.style.left     = '50%';
+    turner.style.width    = '50%';
+    turner.style.transformOrigin = 'left center';
+    turner.style.transform       = 'scaleX(1)';
+    turner.style.transition      = 'none';
+ 
+    // Shadow on right page
+    pShadow.className     = 'page-shadow shadow-right';
+    pShadow.style.display = 'block';
+    pShadow.style.opacity = '0';
+    pShadow.style.transition = 'none';
+ 
+    void turner.offsetWidth; // force reflow
+ 
+    // Animate: squeeze turner from left→spine (scaleX 1→0)
+    turner.style.transition  = 'transform '+DUR+'ms cubic-bezier(0.4,0,0.6,1)';
+    turner.style.transform   = 'scaleX(0)';
+ 
+    pShadow.style.transition = 'opacity '+(DUR*0.6)+'ms ease-out '+(DUR*0.2)+'ms';
+    pShadow.style.opacity    = '0.6';
+ 
     setTimeout(function(){
       cur++;
-      pageL.innerHTML = spreads[cur].left + navHTML(cur);
-      pageR.innerHTML = spreads[cur].right;
-      attachInteractives();
-      turner.style.display='none';pShadow.style.display='none';
-      cornerL.style.visibility=cur===0?'hidden':'visible';
-      cornerR.style.visibility=cur===TOTAL-1?'hidden':'visible';
-      updateDots();busy=false;
-    },DUR+40);
+      // Now render full new spread on static pages
+      pageL.innerHTML = spreads[cur].left;
+      pageR.innerHTML = spreads[cur].right + navHTML(cur);
+      attachNav();
+      turner.style.display  = 'none';
+      pShadow.style.display = 'none';
+      cornerL.style.visibility = cur===0?'hidden':'visible';
+      cornerR.style.visibility = cur===TOTAL-1?'hidden':'visible';
+      updateDots();
+      busy=false;
+    }, DUR+40);
   }
-
-  /* ── FLIP BACKWARD ── */
+ 
+  // ── FLIP BACKWARD ────────────────────────────────────────
   function prev(){
     if(busy||cur<=0) return;
     busy=true;
+ 
+    // Show incoming left page behind everything
     pageL.innerHTML = spreads[cur-1].left;
-    turner.className='page-turner left-turn';
-    turner.style.display='block';turner.style.left='0%';turner.style.width='50%';
-    turner.style.transformOrigin='right center';turner.style.transform='scaleX(0)';turner.style.transition='none';
-    pShadow.className='page-shadow shadow-left';pShadow.style.display='block';pShadow.style.opacity='0.5';pShadow.style.transition='none';
+ 
+    // Turner on left half, starts at spine (scaleX=0) and expands left
+    turner.className     = 'page-turner left-turn';
+    turner.style.display = 'block';
+    turner.style.left    = '0%';
+    turner.style.width   = '50%';
+    turner.style.transformOrigin = 'right center';
+    turner.style.transform       = 'scaleX(0)';
+    turner.style.transition      = 'none';
+ 
+    pShadow.className     = 'page-shadow shadow-left';
+    pShadow.style.display = 'block';
+    pShadow.style.opacity = '0.5';
+    pShadow.style.transition = 'none';
+ 
     void turner.offsetWidth;
-    turner.style.transition='transform '+DUR+'ms cubic-bezier(0.4,0,0.6,1)';turner.style.transform='scaleX(1)';
-    pShadow.style.transition='opacity '+(DUR*0.5)+'ms ease-in';pShadow.style.opacity='0';
+ 
+    turner.style.transition  = 'transform '+DUR+'ms cubic-bezier(0.4,0,0.6,1)';
+    turner.style.transform   = 'scaleX(1)';
+ 
+    pShadow.style.transition = 'opacity '+(DUR*0.5)+'ms ease-in';
+    pShadow.style.opacity    = '0';
+ 
     setTimeout(function(){
       cur--;
-      pageL.innerHTML = spreads[cur].left + navHTML(cur);
-      pageR.innerHTML = spreads[cur].right;
-      attachInteractives();
-      turner.style.display='none';pShadow.style.display='none';
-      cornerL.style.visibility=cur===0?'hidden':'visible';
-      cornerR.style.visibility=cur===TOTAL-1?'hidden':'visible';
-      updateDots();busy=false;
-    },DUR+40);
+      pageL.innerHTML = spreads[cur].left;
+      pageR.innerHTML = spreads[cur].right + navHTML(cur);
+      attachNav();
+      turner.style.display  = 'none';
+      pShadow.style.display = 'none';
+      cornerL.style.visibility = cur===0?'hidden':'visible';
+      cornerR.style.visibility = cur===TOTAL-1?'hidden':'visible';
+      updateDots();
+      busy=false;
+    }, DUR+40);
   }
-
-  cornerR.addEventListener('click',next);
-  cornerL.addEventListener('click',prev);
+ 
+  function attachNav(){
+    var btnN = document.querySelector('.btn-next');
+    var btnP = document.querySelector('.btn-prev');
+    if(btnN) btnN.addEventListener('click', next);
+    if(btnP) btnP.addEventListener('click', prev);
+  }
+ 
+  // Corners
+  cornerR.addEventListener('click', next);
+  cornerL.addEventListener('click', prev);
+ 
+  // Keys
   document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight'||e.key==='ArrowDown') next();
     if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   prev();
   });
+ 
+  // Touch
   var tx=0;
   document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
   document.addEventListener('touchend',function(e){
     var dx=e.changedTouches[0].clientX-tx;
-    if(Math.abs(dx)>50){dx<0?next():prev();}
+    if(Math.abs(dx)>50){ dx<0?next():prev(); }
   },{passive:true});
-
-  /* Init */
-  render(0);
+ 
+  // Init
+  pageL.innerHTML = spreads[0].left;
+  pageR.innerHTML = spreads[0].right + navHTML(0);
+  attachNav();
+  cornerL.style.visibility='hidden';
 })();
 </script>
 </body>

@@ -15,84 +15,149 @@
             background: #120a07 url('https://www.transparenttextures.com/patterns/dark-wood.png');
             font-family: 'Crimson Text', serif; color: var(--ink);
             min-height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 40px 20px;
+            align-items: center; padding: 40px 20px 24px; gap: 0;
         }
-        .site-header { margin-bottom: 20px; text-align: center; }
+        .site-header {
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            max-width: calc(var(--page-w) * 2 + 20px);
+        }
         .site-header a { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 3rem; text-decoration: none; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
- 
+        .btn-back {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Crimson Text', serif;
+            font-size: 0.9rem;
+            color: var(--gold);
+            background: transparent;
+            border: 1px solid rgba(197,160,89,0.45);
+            border-radius: 6px;
+            padding: 6px 14px;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: background 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+        .btn-back:hover { background: rgba(197,160,89,0.12); border-color: var(--gold); }
+
         .book-container { display: flex; justify-content: center; align-items: center; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)); }
         .book { display: grid; grid-template-columns: var(--page-w) var(--page-w); background: var(--leather); padding: 10px; border-radius: 8px; position: relative; }
         .book::after { content: ''; position: absolute; left: 50%; top: 10px; bottom: 10px; width: 3px; background: rgba(0,0,0,0.3); transform: translateX(-50%); z-index: 10; box-shadow: 1px 0 4px rgba(197,160,89,0.15); }
- 
+
         .page { height: var(--page-h); background: var(--parchment) url('https://www.transparenttextures.com/patterns/parchment.png'); padding: 36px 32px; overflow-y: auto; position: relative; }
         .page-left { border-radius: 5px 0 0 5px; border-right: 1px solid rgba(0,0,0,0.1); }
         .page-right { border-radius: 0 5px 5px 0; }
- 
+
         .page-heading { font-family: 'Great Vibes', cursive; color: var(--sepia); font-size: 2.8rem; text-align: center; margin-bottom: 10px; }
         .page-rule { border: none; border-top: 1px dotted var(--sepia); margin: 12px 0; opacity: 0.5; }
- 
-        /* Upload */
+
         .upload-zone { border: 2px dashed var(--gold); border-radius: 12px; padding: 30px 20px; text-align: center; background: rgba(197,160,89,0.05); cursor: pointer; transition: background 0.2s; }
         .upload-zone:hover { background: rgba(197,160,89,0.1); }
         .upload-zone h3 { font-size: 1.1rem; margin: 8px 0 4px; color: var(--sepia); }
         .upload-zone p { font-size: 0.9rem; opacity: 0.7; }
- 
-        /* Preview */
+
         #previewImg { width: 100%; border-radius: 8px; margin-bottom: 10px; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.15); display: block; }
- 
-        /* Tags */
+
         .tag { background: #dccfb4; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; display: inline-block; margin: 3px; border: 1px solid rgba(0,0,0,0.08); color: var(--ink); }
-        .tag.highlight { background: rgba(197,160,89,0.25); border-color: var(--gold); font-weight: 600; }
- 
-        /* Buttons */
+
         .btn-nana { width: 100%; padding: 12px; background: var(--leather); color: var(--gold); font-family: 'Great Vibes', cursive; font-size: 1.7rem; border: 1px solid var(--gold); border-radius: 8px; cursor: pointer; margin-top: 16px; transition: background 0.2s; }
         .btn-nana:hover { background: #5c3828; }
         .btn-nana:disabled { opacity: 0.5; cursor: not-allowed; }
- 
-        /* Loading */
+
         .cauldron { font-size: 3.2rem; display: block; text-align: center; animation: stir 1.8s infinite ease-in-out; margin-top: 50px; }
         @keyframes stir { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
         .loading-text { text-align: center; margin-top: 14px; font-style: italic; opacity: 0.8; font-size: 1rem; }
- 
-        /* Progress steps */
+
         .analysis-steps { margin-top: 12px; font-size: 0.88rem; text-align: center; }
         .step { padding: 3px 0; opacity: 0.5; transition: opacity 0.4s; }
         .step.active { opacity: 1; font-weight: 600; color: var(--sepia); }
         .step.done { opacity: 0.7; }
         .step.done::before { content: '✓ '; color: green; }
- 
-        /* Ingredient list */
+
         .ingredient-section { margin-bottom: 10px; }
         .ingredient-section h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sepia); opacity: 0.7; margin-bottom: 6px; }
- 
-        /* Video cards */
-        .video-card { background: rgba(255,255,255,0.45); display: flex; gap: 12px; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid rgba(197,160,89,0.35); cursor: pointer; text-decoration: none; color: var(--ink); transition: background 0.2s, transform 0.15s; }
-        .video-card:hover { background: rgba(255,255,255,0.65); transform: translateY(-1px); }
-        .video-thumb-placeholder { width: 90px; height: 60px; border-radius: 6px; flex-shrink: 0; background: rgba(197,160,89,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; }
-        .video-info { flex: 1; min-width: 0; }
-        .video-title { font-weight: 700; font-size: 0.95rem; color: var(--sepia); line-height: 1.3; margin-bottom: 3px; }
-        .video-channel { font-size: 0.8rem; opacity: 0.65; margin-bottom: 2px; }
-        .video-badge { font-size: 0.72rem; background: rgba(197,160,89,0.2); padding: 1px 7px; border-radius: 10px; color: var(--sepia); display: inline-block; margin-top: 3px; }
- 
-        /* Analysis summary box */
+
+        .recipe-card {
+            background: rgba(255,255,255,0.45);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(197,160,89,0.35);
+            overflow: hidden;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .recipe-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+        .recipe-card a {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .recipe-thumb {
+            width: 80px;
+            height: 56px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(197,160,89,0.25), rgba(93,64,55,0.15));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            border: 1px solid rgba(197,160,89,0.2);
+            position: relative;
+        }
+        .recipe-thumb::after {
+            content: '▶';
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            background: #ff0000;
+            color: white;
+            font-size: 0.45rem;
+            padding: 1px 4px;
+            border-radius: 2px;
+            line-height: 1.8;
+        }
+        .recipe-info { flex: 1; min-width: 0; }
+        .recipe-name { font-weight: 700; font-size: 0.95rem; color: var(--sepia); line-height: 1.3; margin-bottom: 3px; }
+        .recipe-desc { font-size: 0.8rem; opacity: 0.75; line-height: 1.4; margin-bottom: 5px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .recipe-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+        .recipe-badge { font-size: 0.7rem; background: rgba(197,160,89,0.2); padding: 1px 7px; border-radius: 10px; color: var(--sepia); }
+        .yt-badge { background: rgba(255,0,0,0.1); color: #c00; border: 1px solid rgba(255,0,0,0.15); }
+
+        .spoon-card {
+            background: rgba(255,255,255,0.45);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(197,160,89,0.35);
+            padding: 10px;
+            overflow: hidden;
+        }
+        .spoon-card img { width: 100%; border-radius: 6px; margin-bottom: 6px; border: 3px solid white; }
+        .spoon-card h3 { font-size: 0.95rem; color: var(--sepia); font-weight: 700; margin-bottom: 4px; }
+        .spoon-card p { font-size: 0.82rem; opacity: 0.75; }
+        .spoon-card a { color: var(--sepia); text-decoration: none; font-size: 0.82rem; font-style: italic; }
+        .spoon-card a:hover { text-decoration: underline; }
+
         .analysis-box { background: rgba(255,255,255,0.3); border: 1px solid rgba(197,160,89,0.3); border-radius: 8px; padding: 12px; margin-bottom: 14px; font-size: 0.88rem; font-style: italic; color: var(--sepia); line-height: 1.5; }
- 
-        /* Recipe tip box */
-        .recipe-tip { background: rgba(255,255,255,0.25); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 12px; font-size: 0.85rem; font-style: italic; color: var(--sepia); line-height: 1.5; }
- 
-        /* Visibility helpers */
-        #left-preview, #left-loading, #left-ingredients, #right-loading, #right-results { display: none; }
+
+        #left-preview, #left-loading, #left-ingredients { display: none; }
+        #right-loading, #right-results { display: none; }
         #right-empty { text-align: center; margin-top: 80px; opacity: 0.5; }
- 
-        /* Scrollbar */
+
         .page::-webkit-scrollbar { width: 4px; }
         .page::-webkit-scrollbar-thumb { background: rgba(93,64,55,0.3); border-radius: 4px; }
- 
-        /* Camera / snapshot */
+
         .snap-row { display: flex; gap: 8px; margin-top: 10px; }
         .btn-snap { flex: 1; padding: 10px; background: var(--sepia); color: var(--parchment); font-family: 'Crimson Text', serif; font-size: 1rem; border: 1px solid var(--gold); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s; }
         .btn-snap:hover { background: #7a5440; }
- 
+
         #cameraModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
         #cameraModal.open { display: flex; }
         #cameraVideo { border-radius: 12px; max-width: 90vw; max-height: 60vh; border: 3px solid var(--gold); }
@@ -101,10 +166,28 @@
         .btn-cam.shoot { background: var(--gold); color: var(--leather); font-weight: 700; }
         .btn-cam.cancel { background: transparent; color: var(--gold); }
         #snapCanvas { display: none; }
- 
-        /* Error box */
+
         .error-box { background: rgba(180,50,50,0.1); border: 1px solid rgba(180,50,50,0.3); border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 0.85rem; color: #8b2020; text-align: center; }
- 
+
+        .search-divider { border: none; border-top: 1px dotted var(--sepia); margin: 14px 0; opacity: 0.4; }
+        .search-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sepia); opacity: 0.7; text-align: center; margin-bottom: 8px; }
+        .search-row { display: flex; gap: 6px; margin-bottom: 8px; }
+        .search-input { flex: 1; padding: 8px 10px; font-family: 'Crimson Text', serif; font-size: 0.95rem; background: rgba(255,255,255,0.5); border: 1px solid rgba(197,160,89,0.5); border-radius: 6px; color: var(--ink); outline: none; }
+        .search-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.75); }
+        .btn-search-sm { padding: 8px 12px; background: var(--leather); color: var(--gold); border: 1px solid var(--gold); border-radius: 6px; cursor: pointer; font-family: 'Crimson Text', serif; font-size: 0.9rem; white-space: nowrap; transition: background 0.2s; }
+        .btn-search-sm:hover { background: #5c3828; }
+        .search-chip-row { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; min-height: 24px; }
+        .search-chip { background: #dccfb4; padding: 3px 10px; border-radius: 20px; font-size: 0.82rem; border: 1px solid rgba(0,0,0,0.1); color: var(--ink); display: flex; align-items: center; gap: 5px; }
+        .search-chip button { background: none; border: none; cursor: pointer; color: var(--sepia); font-size: 0.8rem; padding: 0; line-height: 1; opacity: 0.6; }
+        .search-chip button:hover { opacity: 1; }
+        .search-actions { display: flex; gap: 6px; }
+        .btn-search-go { flex: 1; padding: 9px; background: var(--gold); color: var(--leather); border: none; border-radius: 6px; cursor: pointer; font-family: 'Great Vibes', cursive; font-size: 1.3rem; transition: background 0.2s; }
+        .btn-search-go:hover { background: #b8923e; }
+        .btn-search-go:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-search-reset { padding: 9px 12px; background: transparent; color: var(--sepia); border: 1px solid rgba(93,64,55,0.3); border-radius: 6px; cursor: pointer; font-family: 'Crimson Text', serif; font-size: 0.9rem; transition: border-color 0.2s; }
+        .btn-search-reset:hover { border-color: var(--sepia); }
+        #searchResults { margin-top: 10px; }
+
         @media (max-width: 920px) {
             :root { --page-w: 90vw; --page-h: auto; }
             .book { grid-template-columns: 1fr; }
@@ -112,19 +195,22 @@
             .page-left { border-radius: 5px 5px 0 0; border-right: none; border-bottom: 1px solid rgba(0,0,0,0.1); }
             .page-right { border-radius: 0 0 5px 5px; }
             .page { height: auto; min-height: 300px; }
+            .btn-back { position: static; transform: none; display: block; margin: 0 auto 12px; width: fit-content; }
         }
     </style>
 </head>
 <body>
-    <header class="site-header"><a href="#" onclick="location.reload()">Nana's Secret Recipes</a></header>
+    <header class="site-header">
+        <a href="#" onclick="location.reload()">Nana's Secret Recipes</a>
+    </header>
     <div class="book-container">
         <div class="book">
+
             <!-- LEFT PAGE -->
             <div class="page page-left">
                 <h2 class="page-heading">The Pantry</h2>
                 <hr class="page-rule">
- 
-                <!-- Upload state -->
+
                 <div id="left-upload">
                     <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
                         <input type="file" id="fileInput" accept="image/*" style="display:none">
@@ -136,8 +222,7 @@
                         <button class="btn-snap" onclick="openCamera()">📷 Use Camera</button>
                     </div>
                 </div>
- 
-                <!-- Preview state -->
+
                 <div id="left-preview">
                     <img id="previewImg" src="" alt="Your ingredients">
                     <div class="snap-row">
@@ -145,56 +230,70 @@
                         <button class="btn-nana" id="analyzeBtn" style="margin-top:0">Analyze Ingredients 🔍</button>
                     </div>
                 </div>
- 
-                <!-- Loading state -->
+
                 <div id="left-loading">
                     <span class="cauldron">🍲</span>
-                    <p class="loading-text">Nana's putting on her glasses…</p>
-                    <div class="analysis-steps" id="analysisSteps">
+                    <p class="loading-text" id="loadingText">Nana's putting on her glasses…</p>
+                    <div class="analysis-steps">
                         <div class="step" id="step1">👁️ Scanning the image</div>
                         <div class="step" id="step2">🥕 Identifying ingredients</div>
-                        <div class="step" id="step3">📋 Noting quantities & states</div>
+                        <div class="step" id="step3">📋 Noting quantities &amp; states</div>
                         <div class="step" id="step4">🍽️ Thinking about meals</div>
                     </div>
                 </div>
- 
-                <!-- Ingredients state -->
+
                 <div id="left-ingredients">
                     <div class="analysis-box" id="nanaObservation"></div>
                     <div class="ingredient-section">
                         <h4>🥬 Identified Ingredients</h4>
                         <div id="ingredientTags" style="text-align:center;"></div>
                     </div>
-                    <button class="btn-nana" id="findVideosBtn">Find Recipes & Videos ✨</button>
+                    <div class="analysis-box" id="nanaNotes" style="display:none;"></div>
+                    <button class="btn-nana" id="findVideosBtn">Find Recipes on YouTube ▶</button>
                     <div style="text-align:center; margin-top:8px;">
                         <small style="opacity:0.5; cursor:pointer" onclick="resetToUpload()">← Start over</small>
                     </div>
                 </div>
             </div>
- 
+
             <!-- RIGHT PAGE -->
             <div class="page page-right">
                 <h2 class="page-heading">Nana's Notes</h2>
                 <hr class="page-rule">
- 
+
                 <div id="right-empty">
                     <span style="font-size:4rem">🥣</span>
                     <p style="margin-top:10px;">Waiting for ingredients…</p>
                 </div>
- 
+
                 <div id="right-loading">
                     <span class="cauldron">📖</span>
                     <p class="loading-text">Searching the recipe box…</p>
                 </div>
- 
+
                 <div id="right-results">
                     <p style="font-size:0.85rem; font-style:italic; opacity:0.7; margin-bottom:12px; text-align:center;" id="recipeIntro"></p>
                     <div id="recipeGrid"></div>
+                    <p style="font-size:0.72rem; text-align:center; opacity:0.45; margin-top:8px;">▶ Click any card to watch on YouTube</p>
                 </div>
+
+                <!-- Search bar -->
+                <hr class="search-divider">
+                <p class="search-label">🔍 Search by Ingredient</p>
+                <div class="search-row">
+                    <input class="search-input" id="searchIngredientInput" placeholder="e.g. chicken, garlic…" onkeydown="if(event.key==='Enter') addSearchIngredient()">
+                    <button class="btn-search-sm" onclick="addSearchIngredient()">Add</button>
+                </div>
+                <div class="search-chip-row" id="searchChips"></div>
+                <div class="search-actions">
+                    <button class="btn-search-go" id="searchGoBtn" onclick="runIngredientSearch()">Search Recipes</button>
+                    <button class="btn-search-reset" onclick="resetSearch()">Reset</button>
+                </div>
+                <div id="searchResults"></div>
             </div>
         </div>
     </div>
- 
+
     <!-- Camera Modal -->
     <div id="cameraModal">
         <video id="cameraVideo" autoplay playsinline></video>
@@ -204,275 +303,387 @@
             <button class="btn-cam cancel" onclick="closeCamera()">✕ Cancel</button>
         </div>
     </div>
- 
+
     <script>
-    // ─── STATE ───────────────────────────────────────────────────────────────────
-    const $ = id => document.getElementById(id);
-    let base64Image = "", mimeType = "image/jpeg";
-    let detectedIngredients = [], analysisResult = {};
-    let cameraStream = null;
- 
-    // ─── VISIBILITY HELPERS ───────────────────────────────────────────────────────
-    function showLeft(id)  { ['upload','preview','loading','ingredients'].forEach(s => $('left-'+s).style.display  = s===id ? 'block' : 'none'); }
-    function showRight(id) { ['empty','loading','results'].forEach(s => $('right-'+s).style.display = s===id ? 'block' : 'none'); }
-    function resetToUpload() { showLeft('upload'); showRight('empty'); base64Image=''; detectedIngredients=[]; }
- 
-    // ─── FILE INPUT ───────────────────────────────────────────────────────────────
-    $('fileInput').addEventListener('change', e => {
-        const file = e.target.files[0];
-        if (!file) return;
-        mimeType = file.type || 'image/jpeg';
-        const reader = new FileReader();
-        reader.onload = ev => {
-            $('previewImg').src = ev.target.result;
-            base64Image = ev.target.result.split(',')[1];
-            showLeft('preview');
-        };
-        reader.readAsDataURL(file);
+const $ = id => document.getElementById(id);
+const OR_API_KEY = "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";
+const SPOON_KEY  = "bc138f524fe840a4b37027d0b2a0c94d";
+const CORS_PROXY = "https://corsproxy.io/?url=";
+
+let base64Image = "", mimeType = "image/jpeg";
+let detectedIngredients = [], analysisResult = {};
+let cameraStream = null, stepTimer = null;
+
+function showLeft(id) {
+    ['upload','preview','loading','ingredients'].forEach(s => {
+        $('left-' + s).style.display = s === id ? 'block' : 'none';
     });
- 
-    // ─── CAMERA / SNAPSHOT ────────────────────────────────────────────────────────
-    async function openCamera() {
-        try {
-            cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-            $('cameraVideo').srcObject = cameraStream;
-            $('cameraModal').classList.add('open');
-        } catch(e) { alert("Couldn't access camera: " + e.message); }
+    if (id !== 'loading') stopStepAnimation();
+}
+
+function showRight(id) {
+    ['empty','loading','results'].forEach(s => {
+        $('right-' + s).style.display = s === id ? 'block' : 'none';
+    });
+}
+
+function resetToUpload() {
+    showLeft('upload'); showRight('empty');
+    base64Image = ''; detectedIngredients = []; analysisResult = {};
+    $('fileInput').value = '';
+}
+
+function startStepAnimation() {
+    const steps = ['step1','step2','step3','step4'];
+    let current = 0;
+    steps.forEach(s => $(s).className = 'step');
+    function activate() {
+        if (current > 0) $(steps[current - 1]).className = 'step done';
+        if (current < steps.length) {
+            $(steps[current]).className = 'step active';
+            current++;
+            stepTimer = setTimeout(activate, 1800);
+        }
     }
-    function closeCamera() {
-        if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
-        $('cameraModal').classList.remove('open');
-    }
-    function takeSnapshot() {
-        const video = $('cameraVideo'), canvas = $('snapCanvas');
-        canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        const dataURL = canvas.toDataURL('image/jpeg', 0.92);
-        $('previewImg').src = dataURL;
-        base64Image = dataURL.split(',')[1];
-        mimeType = 'image/jpeg';
-        closeCamera();
+    activate();
+}
+
+function stopStepAnimation() {
+    if (stepTimer) { clearTimeout(stepTimer); stepTimer = null; }
+    ['step1','step2','step3','step4'].forEach(s => $(s).className = 'step');
+}
+
+$('fileInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    mimeType = file.type || 'image/jpeg';
+    const reader = new FileReader();
+    reader.onload = ev => {
+        $('previewImg').src = ev.target.result;
+        base64Image = ev.target.result.split(',')[1];
         showLeft('preview');
-    }
- 
-    // ─── STEP ANIMATOR ───────────────────────────────────────────────────────────
-    let stepTimer = null;
-    function animateSteps() {
-        const steps = ['step1','step2','step3','step4'];
-        steps.forEach(s => $(s).className = 'step');
-        $(steps[0]).className = 'step active';
-        let i = 0;
-        stepTimer = setInterval(() => {
-            if (i < steps.length - 1) {
-                $(steps[i]).className = 'step done';
-                i++;
-                $(steps[i]).className = 'step active';
-            } else clearInterval(stepTimer);
-        }, 1400);
-    }
-    function stopSteps() { clearInterval(stepTimer); }
- 
-    // ─── CLAUDE API CALL ─────────────────────────────────────────────────────────
-    async function callClaude(messages, systemPrompt, maxTokens = 1024) {
-        const body = {
-            model: "claude-sonnet-4-20250514",
-            max_tokens: maxTokens,
-            messages
-        };
-        if (systemPrompt) body.system = systemPrompt;
- 
-        // Try direct first, fall back to CORS proxy for environments like Pickcode
-        const endpoints = [
-            { url: "https://api.anthropic.com/v1/messages", direct: true },
-            { url: "https://corsproxy.io/?url=https://api.anthropic.com/v1/messages", direct: false }
-        ];
- 
-        let lastErr;
-        for (const ep of endpoints) {
-            try {
-                const res = await fetch(ep.url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                });
-                const data = await res.json();
-                if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
-                return data.content.map(b => b.text || "").join("");
-            } catch(e) {
-                lastErr = e;
-                if (ep.direct) continue; // try proxy next
-                throw lastErr;
-            }
-        }
-        throw lastErr;
-    }
- 
-    // ─── INGREDIENT ANALYSIS ─────────────────────────────────────────────────────
-    $('analyzeBtn').addEventListener('click', async () => {
-        if (!base64Image) return;
-        showLeft('loading');
-        animateSteps();
- 
-        const mediaType = mimeType.includes('png') ? 'image/png'
-                        : mimeType.includes('webp') ? 'image/webp'
-                        : mimeType.includes('gif') ? 'image/gif'
-                        : 'image/jpeg';
- 
-        const prompt = `Analyze this kitchen/pantry photo with extreme thoroughness.
- 
-1. Identify EVERY food ingredient visible — even partial, background, or partially hidden items.
-2. Note the state of each: raw, cooked, ripe, overripe, frozen, canned, dried, etc.
-3. Estimate rough quantities where visible (e.g. "3 eggs", "half a bunch of spinach", "2 large tomatoes").
-4. Identify any cooking essentials like oils, sauces, spices, condiments.
- 
-Respond ONLY in this exact JSON format (no markdown, no backticks):
-{
-  "observation": "A warm 1-2 sentence observation Nana would make about what she sees, in first person.",
-  "primary": ["ingredient1 (state/qty)", "ingredient2 (state/qty)"],
-  "pantry": ["oil", "salt", "spice"],
-  "notes": "Any important notes about freshness or limitations."
-}`;
- 
-        try {
-            const text = await callClaude([{
-                role: "user",
-                content: [
-                    {
-                        type: "image",
-                        source: { type: "base64", media_type: mediaType, data: base64Image }
-                    },
-                    { type: "text", text: prompt }
-                ]
-            }], "You are Nana, a warm professional chef and nutritionist with eagle eyes for spotting ingredients.", 1024);
- 
-            let clean = text.trim().replace(/```json|```/g, '').trim();
-            // Extract JSON if wrapped in extra text
-            const jsonMatch = clean.match(/\{[\s\S]*\}/);
-            if (jsonMatch) clean = jsonMatch[0];
- 
-            analysisResult = JSON.parse(clean);
-            detectedIngredients = [...(analysisResult.primary || []), ...(analysisResult.pantry || [])];
- 
-            $('nanaObservation').textContent = `"${analysisResult.observation}"`;
- 
-            const tagsHTML =
-                (analysisResult.primary || []).map(i => `<span class="tag highlight">${escHtml(cleanStr(i))}</span>`).join('') +
-                (analysisResult.pantry || []).map(i => `<span class="tag">${escHtml(cleanStr(i))}</span>`).join('');
-            $('ingredientTags').innerHTML = tagsHTML;
- 
-            stopSteps();
-            showLeft('ingredients');
-        } catch(err) {
-            stopSteps();
-            console.error('Analysis error:', err);
-            showLeft('preview');
-            // Show error near the button
-            const existing = document.querySelector('.error-box');
-            if (existing) existing.remove();
-            const errBox = document.createElement('div');
-            errBox.className = 'error-box';
-            errBox.textContent = `Nana had trouble reading the image: ${err.message}. Please try again.`;
-            $('left-preview').appendChild(errBox);
-        }
+    };
+    reader.readAsDataURL(file);
+});
+
+async function openCamera() {
+    try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        $('cameraVideo').srcObject = cameraStream;
+        $('cameraModal').classList.add('open');
+    } catch(e) { alert("Camera error: " + e.message); }
+}
+
+function closeCamera() {
+    if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
+    $('cameraModal').classList.remove('open');
+}
+
+function takeSnapshot() {
+    const v = $('cameraVideo'), c = $('snapCanvas');
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    c.getContext('2d').drawImage(v, 0, 0);
+    const dataURL = c.toDataURL('image/jpeg', 0.9);
+    $('previewImg').src = dataURL;
+    base64Image = dataURL.split(',')[1];
+    mimeType = 'image/jpeg';
+    closeCamera();
+    showLeft('preview');
+}
+
+const VISION_MODELS = [
+    "google/gemma-3-27b-it",
+    "google/gemma-3-12b-it",
+    "mistralai/mistral-small-3.1-24b-instruct"
+];
+const TEXT_MODELS = [
+    "google/gemma-3-27b-it",
+    "mistralai/mistral-small-3.1-24b-instruct",
+    "openai/gpt-4o-mini"
+];
+
+async function callWithModel(model, messages) {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${OR_API_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ model, messages, temperature: 0.4, max_tokens: 1500 })
     });
- 
-    // ─── FIND RECIPES ─────────────────────────────────────────────────────────────
-    $('findVideosBtn').addEventListener('click', async () => {
-        showRight('loading');
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        const msg = err?.error?.message || `HTTP ${res.status}`;
+        if (msg.includes("No endpoints found") || res.status === 404) throw new Error("MODEL_DEAD");
+        throw new Error(msg);
+    }
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content;
+    if (!text) throw new Error("Empty AI response");
+    return text;
+}
+
+async function callAI(promptText, imageBase64 = null, imageMime = null) {
+    const messages = [];
+    if (imageBase64) {
+        messages.push({ role: "user", content: [
+            { type: "image_url", image_url: { url: `data:${imageMime};base64,${imageBase64}` } },
+            { type: "text", text: promptText }
+        ]});
+    } else {
+        messages.push({ role: "user", content: promptText });
+    }
+    const models = imageBase64 ? VISION_MODELS : TEXT_MODELS;
+    let lastError;
+    for (const model of models) {
         try {
-            const ingredientList = (analysisResult.primary || detectedIngredients)
-                .map(i => cleanStr(i)).join(', ');
- 
-            const recipePrompt = `Given these available ingredients: ${ingredientList}
- 
-Suggest exactly 4 specific, realistic recipes that can be made primarily with these ingredients.
-Prioritize recipes that use most of the main ingredients.
- 
-For each recipe, provide:
-- A specific recipe name (e.g. "Garlic Butter Shrimp Pasta" not just "pasta")
-- A 1-sentence description of why it works with these ingredients
-- 3 key tips or steps
-- The main ingredients used from the list
- 
-Respond ONLY in this exact JSON format (no markdown, no backticks):
+            return await callWithModel(model, messages);
+        } catch (err) {
+            if (err.message === "MODEL_DEAD") continue;
+            lastError = err;
+            await new Promise(r => setTimeout(r, 800));
+        }
+    }
+    throw new Error("All models failed: " + (lastError?.message || "Unknown error"));
+}
+
+function extractJSON(text, type = 'object') {
+    const stripped = text.replace(/```json|```/g, '').trim();
+    const pattern = type === 'array' ? /\[[\s\S]*\]/ : /\{[\s\S]*\}/;
+    const match = stripped.match(pattern);
+    if (!match) throw new Error("No valid JSON found in response");
+    return JSON.parse(match[0]);
+}
+
+function youtubeSearchURL(recipeName, ingredients = []) {
+    const topIngredients = ingredients.slice(0, 3).join(' ');
+    const query = `${recipeName} recipe ${topIngredients}`;
+    return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+}
+
+function recipeEmoji(name = '') {
+    const n = name.toLowerCase();
+    if (n.includes('soup') || n.includes('stew') || n.includes('chili')) return '🍲';
+    if (n.includes('salad')) return '🥗';
+    if (n.includes('pasta') || n.includes('noodle') || n.includes('spaghetti')) return '🍝';
+    if (n.includes('rice') || n.includes('fried rice')) return '🍚';
+    if (n.includes('stir')) return '🥘';
+    if (n.includes('sandwich') || n.includes('wrap') || n.includes('burger')) return '🥪';
+    if (n.includes('egg') || n.includes('omel')) return '🍳';
+    if (n.includes('curry')) return '🍛';
+    if (n.includes('taco') || n.includes('burrito') || n.includes('quesadilla')) return '🌮';
+    if (n.includes('pizza')) return '🍕';
+    if (n.includes('cake') || n.includes('bread') || n.includes('muffin')) return '🍰';
+    if (n.includes('smoothie') || n.includes('juice')) return '🥤';
+    return '🍴';
+}
+
+$('analyzeBtn').onclick = async () => {
+    if (!base64Image) return;
+    showLeft('loading');
+    startStepAnimation();
+
+    const prompt = `You are a helpful cooking assistant. Analyze this food/ingredient image carefully.
+Return ONLY a valid JSON object with no markdown, no explanation:
+{
+  "observation": "A friendly one-sentence description of what you see",
+  "primary": ["main ingredient 1", "main ingredient 2"],
+  "pantry": ["supporting ingredient 1", "supporting ingredient 2"],
+  "notes": "One sentence tip about freshness, quantity, or cooking suitability"
+}`;
+
+    try {
+        const text = await callAI(prompt, base64Image, mimeType);
+        analysisResult = extractJSON(text, 'object');
+        detectedIngredients = [...(analysisResult.primary || []), ...(analysisResult.pantry || [])];
+        $('nanaObservation').textContent = analysisResult.observation || "Here's what I found!";
+        $('ingredientTags').innerHTML = detectedIngredients.map(i => `<span class="tag">${i}</span>`).join('');
+        if (analysisResult.notes) {
+            $('nanaNotes').textContent = "💡 " + analysisResult.notes;
+            $('nanaNotes').style.display = 'block';
+        } else {
+            $('nanaNotes').style.display = 'none';
+        }
+        showLeft('ingredients');
+    } catch (err) {
+        showLeft('preview');
+        const errBox = document.createElement('div');
+        errBox.className = 'error-box';
+        errBox.textContent = "Nana couldn't read the image: " + err.message;
+        $('left-preview').appendChild(errBox);
+        setTimeout(() => errBox.remove(), 5000);
+    }
+};
+
+$('findVideosBtn').onclick = async () => {
+    showRight('loading');
+    const list = detectedIngredients.join(', ');
+
+    const prompt = `You are a creative cooking assistant. Given these ingredients: ${list}
+
+Suggest exactly 4 distinct recipes that can be made primarily from these ingredients.
+Return ONLY a valid JSON array, no markdown, no explanation:
 [
   {
     "name": "Recipe Name",
-    "description": "Why this works with your ingredients.",
-    "tips": ["Tip 1", "Tip 2", "Tip 3"],
-    "usedIngredients": ["ingredient1", "ingredient2"]
+    "description": "2-3 sentence description of how to make it and why it works with these ingredients",
+    "time": "e.g. 20 mins",
+    "difficulty": "Easy"
   }
-]`;
- 
-            const text = await callClaude([{
-                role: "user",
-                content: recipePrompt
-            }], "You are Nana, a warm expert chef. Give practical, delicious recipe suggestions.", 1500);
- 
-            let clean = text.trim().replace(/```json|```/g, '').trim();
-            const arrMatch = clean.match(/\[[\s\S]*\]/);
-            if (arrMatch) clean = arrMatch[0];
-            const recipes = JSON.parse(clean);
- 
-            $('recipeIntro').textContent = `Nana found ${recipes.length} recipes just for you!`;
-            $('recipeGrid').innerHTML = recipes.map(r => renderRecipeCard(r)).join('');
-            showRight('results');
- 
-        } catch(err) {
-            console.error('Recipe error:', err);
-            // Fallback: show YouTube search links for simple recipes
-            const ingredients = (analysisResult.primary || detectedIngredients).slice(0, 3).map(cleanStr);
-            const fallbackRecipes = [
-                ingredients.join(' and ') + ' stir fry',
-                (ingredients[0] || 'vegetable') + ' soup',
-                ingredients.slice(0,2).join(' and ') + ' salad',
-                'easy ' + (ingredients[1] || ingredients[0] || 'dinner')
-            ];
-            $('recipeIntro').textContent = "Here are some ideas from Nana's recipe box!";
-            $('recipeGrid').innerHTML = fallbackRecipes.map(name => renderFallbackCard(name)).join('');
-            showRight('results');
+]
+Difficulty must be one of: Easy, Medium, or Hard.`;
+
+    try {
+        const text = await callAI(prompt);
+        const recipes = extractJSON(text, 'array');
+
+        $('recipeIntro').textContent = `Nana found ${recipes.length} recipe${recipes.length !== 1 ? 's' : ''} — click to watch on YouTube!`;
+
+        $('recipeGrid').innerHTML = recipes.map(r => {
+            const emoji = recipeEmoji(r.name);
+            const ytURL = youtubeSearchURL(r.name, detectedIngredients);
+            const diffColor = r.difficulty === 'Hard' ? '#8b2020' : r.difficulty === 'Medium' ? '#7a5440' : '#2d6a2d';
+            return `
+            <div class="recipe-card">
+                <a href="${ytURL}" target="_blank" rel="noopener noreferrer">
+                    <div class="recipe-thumb">${emoji}</div>
+                    <div class="recipe-info">
+                        <div class="recipe-name">${r.name || 'Recipe'}</div>
+                        <div class="recipe-desc">${r.description || ''}</div>
+                        <div class="recipe-badges">
+                            ${r.time ? `<span class="recipe-badge">⏱ ${r.time}</span>` : ''}
+                            ${r.difficulty ? `<span class="recipe-badge" style="color:${diffColor}">📊 ${r.difficulty}</span>` : ''}
+                            <span class="recipe-badge yt-badge">▶ YouTube</span>
+                        </div>
+                    </div>
+                </a>
+            </div>`;
+        }).join('');
+
+        showRight('results');
+    } catch (err) {
+        $('recipeIntro').textContent = "Nana suggests searching YouTube for these ideas:";
+        const fallbacks = [
+            { name: "Simple Stir Fry", desc: "Toss your ingredients in a hot pan with oil and seasoning." },
+            { name: "Hearty Vegetable Soup", desc: "Simmer everything with broth for a warming bowl." }
+        ];
+        $('recipeGrid').innerHTML = fallbacks.map(r => {
+            const ytURL = youtubeSearchURL(r.name, detectedIngredients);
+            return `
+            <div class="recipe-card">
+                <a href="${ytURL}" target="_blank" rel="noopener noreferrer">
+                    <div class="recipe-thumb">🍴</div>
+                    <div class="recipe-info">
+                        <div class="recipe-name">${r.name}</div>
+                        <div class="recipe-desc">${r.desc}</div>
+                        <div class="recipe-badges">
+                            <span class="recipe-badge yt-badge">▶ YouTube</span>
+                        </div>
+                    </div>
+                </a>
+            </div>`;
+        }).join('');
+        showRight('results');
+    }
+};
+
+let searchIngredients = [];
+
+function renderChips() {
+    $('searchChips').innerHTML = searchIngredients.map((ing, i) =>
+        `<span class="search-chip">${ing}<button onclick="removeSearchIngredient(${i})" title="Remove">✕</button></span>`
+    ).join('');
+}
+
+function addSearchIngredient() {
+    const input = $('searchIngredientInput');
+    const val = input.value.trim();
+    if (val && !searchIngredients.includes(val)) {
+        searchIngredients.push(val);
+        renderChips();
+    }
+    input.value = '';
+    input.focus();
+}
+
+function removeSearchIngredient(i) {
+    searchIngredients.splice(i, 1);
+    renderChips();
+}
+
+function resetSearch() {
+    searchIngredients = [];
+    renderChips();
+    $('searchResults').innerHTML = '';
+    $('searchIngredientInput').value = '';
+}
+
+async function runIngredientSearch() {
+    if (searchIngredients.length === 0) {
+        $('searchResults').innerHTML = '<p style="color:#8b2020;text-align:center;font-size:0.85rem;margin-top:8px;">Add at least one ingredient first!</p>';
+        return;
+    }
+
+    const btn = $('searchGoBtn');
+    btn.disabled = true;
+    btn.textContent = 'Searching…';
+    $('searchResults').innerHTML = '<p style="text-align:center;font-style:italic;opacity:0.6;font-size:0.9rem;margin-top:8px;">Flipping through the recipe box…</p>';
+
+    const ingredientString = searchIngredients.join(',+');
+    const spoonURL = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(ingredientString)}&number=4&ranking=1&ignorePantry=true&apiKey=${SPOON_KEY}`;
+
+    const urlsToTry = [
+        spoonURL,
+        CORS_PROXY + encodeURIComponent(spoonURL)
+    ];
+
+    let data = null;
+    let lastErr = null;
+
+    for (const url of urlsToTry) {
+        try {
+            const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+            if (!res.ok) {
+                const errBody = await res.json().catch(() => ({}));
+                throw new Error(errBody?.message || `HTTP ${res.status}`);
+            }
+            data = await res.json();
+            break;
+        } catch (e) {
+            lastErr = e;
         }
-    });
- 
-    // ─── RENDER HELPERS ───────────────────────────────────────────────────────────
-    function renderRecipeCard(r) {
-        const ytLink = `https://www.youtube.com/results?search_query=${encodeURIComponent(r.name + ' recipe')}`;
-        const tipsHtml = (r.tips || []).map(t => `<li style="margin:3px 0; font-size:0.82rem; opacity:0.85;">${escHtml(t)}</li>`).join('');
-        const usedHtml = (r.usedIngredients || []).slice(0,4).map(i => `<span class="tag" style="font-size:0.75rem; padding:2px 8px;">${escHtml(i)}</span>`).join('');
- 
-        return `<div class="video-card" style="flex-direction:column; gap:6px;">
-            <div style="display:flex; gap:10px; align-items:flex-start;">
-                <div class="video-thumb-placeholder">🍳</div>
-                <div class="video-info">
-                    <div class="video-title">${escHtml(r.name)}</div>
-                    <div class="video-channel" style="font-style:italic;">${escHtml(r.description)}</div>
-                </div>
-            </div>
-            ${tipsHtml ? `<ul style="padding-left:16px; margin-top:4px;">${tipsHtml}</ul>` : ''}
-            ${usedHtml ? `<div style="margin-top:4px;">${usedHtml}</div>` : ''}
-            <a href="${ytLink}" target="_blank" class="video-badge" style="margin-top:6px; display:inline-block; text-align:center;">
-                🎬 Watch on YouTube ↗
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Search Recipes';
+
+    if (!data) {
+        $('searchResults').innerHTML = `<p style="color:#8b2020;text-align:center;font-size:0.85rem;margin-top:8px;">
+            Could not reach Spoonacular — check your API key or connection.<br>
+            <small style="opacity:0.6">${lastErr?.message || ''}</small>
+        </p>`;
+        return;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+        $('searchResults').innerHTML = '<p style="text-align:center;opacity:0.6;font-size:0.9rem;margin-top:8px;">No recipes found — try different ingredients.</p>';
+        return;
+    }
+
+    $('searchResults').innerHTML = data.map(recipe => {
+        const missing = recipe.missedIngredients && recipe.missedIngredients.length
+            ? recipe.missedIngredients.map(i => i.original).join(', ')
+            : 'None — you have everything!';
+        const ytURL = youtubeSearchURL(recipe.title, searchIngredients);
+        return `
+        <div class="spoon-card">
+            <a href="${ytURL}" target="_blank" rel="noopener noreferrer">
+                <img src="${recipe.image}" alt="${recipe.title}" onerror="this.style.display='none'">
+                <h3>${recipe.title}</h3>
+                <p><strong>Missing:</strong> ${missing}</p>
+                <p style="margin-top:4px;">▶ Watch on YouTube</p>
             </a>
         </div>`;
-    }
- 
-    function renderFallbackCard(name) {
-        const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(name + ' recipe')}`;
-        return `<a href="${url}" target="_blank" class="video-card">
-            <div class="video-thumb-placeholder">🍳</div>
-            <div class="video-info">
-                <div class="video-title">${escHtml(name)}</div>
-                <div class="video-channel">Search on YouTube</div>
-                <div class="video-badge">🔍 Find videos ↗</div>
-            </div>
-        </a>`;
-    }
- 
-    // ─── UTILS ───────────────────────────────────────────────────────────────────
-    function cleanStr(str) { return (str || '').replace(/[*#\n]/g, '').replace(/\s+/g, ' ').trim(); }
-    function escHtml(str) {
-        return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
+    }).join('');
+}
     </script>
+    <a href="index.html" style="margin-top:12px; font-family:'Crimson Text',serif; font-size:0.78rem; color:rgba(197,160,89,0.5); text-decoration:none; letter-spacing:1px;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(197,160,89,0.5)'">← back to index</a>
 </body>
 </html>

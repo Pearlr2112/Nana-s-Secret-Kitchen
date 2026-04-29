@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave a Note | Nanna's Pantry</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2b1b12;
+  --gold:#c5a059;
+  --parchment:#eaddca;
+  --brown:#5d4037;
+  --dark:#120a07;
+  --rust:#8b3a1a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  background:var(--dark);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(139,58,26,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(197,160,89,0.06) 0%, transparent 50%);
+  font-family:'Crimson Text',serif;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 16px;
+  overflow-x:hidden;
+}
+
+/* ── ENVELOPE SCENE ── */
+.scene{
+  width:100%;max-width:660px;
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* ── ENVELOPE BACK ── */
+.envelope-back{
+  width:100%;
+  background:linear-gradient(160deg,#c8a96e 0%,#b8943a 50%,#a07828 100%);
+  border-radius:6px 6px 0 0;
+  height:24px;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.5);
+  position:relative;
+  z-index:1;
+}
+
+/* ── LETTER PAPER ── */
+.letter-wrap{
+  width:100%;
+  position:relative;
+  z-index:5;
+  transform:translateY(0);
+  transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.letter{
+  width:100%;
+  background:var(--parchment);
+  background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
+  border-radius:3px;
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.7),
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(139,105,20,0.08);
+  padding:44px 52px 36px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Ruled lines */
+.letter::before{
+  content:'';
+  position:absolute;
+  left:0;right:0;top:0;bottom:0;
+  background-image:repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(139,105,20,0.1) 31px,
+    rgba(139,105,20,0.1) 32px
+  );
+  background-position:0 60px;
+  pointer-events:none;
+}
+
+/* Red margin line */
+.letter::after{
+  content:'';
+  position:absolute;
+  left:72px;top:0;bottom:0;width:1px;
+  background:rgba(180,60,40,0.18);
+  pointer-events:none;
+}
+
+/* ── LETTER HEADER ── */
+.letter-header{
+  text-align:center;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(197,160,89,0.3);
+  position:relative;
+}
+.letter-header h1{
+  font-family:'Great Vibes',cursive;
+  color:var(--brown);
+  font-size:2.8rem;
+  line-height:1;
+  margin-bottom:4px;
+}
+.letter-header .dateline{
+  font-family:'Caveat',cursive;
+  font-size:0.85rem;
+  color:rgba(93,64,55,0.6);
+  letter-spacing:1px;
+}
+
+/* Wax seal decoration top */
+.seal-deco{
+  position:absolute;top:-1px;right:0;
+  width:54px;height:54px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#c5a059,#7a4a10);
+  box-shadow:0 3px 12px rgba(0,0,0,0.35),inset 0 1px 2px rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Great Vibes',cursive;
+  color:#fff;font-size:0.65rem;text-align:center;
+  line-height:1.3;padding:6px;
+}
+
+/* ── SALUTATION ── */
+.salutation{
+  font-family:'Caveat',cursive;
+  font-size:1.25rem;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+
+/* ── FORM FIELDS ── */
+.field-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:18px;
+}
+.field-group{
+  display:flex;flex-direction:column;
+  gap:5px;
+}
+.field-group.full{grid-column:1/-1;}
+
+label{
+  font-family:'Caveat',cursive;
+  font-size:0.82rem;
+  color:rgba(93,64,55,0.7);
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+input[type="text"],
+input[type="email"],
+textarea{
+  background:transparent;
+  border:none;
+  border-bottom:1.5px solid rgba(197,160,89,0.5);
+  border-radius:0;
+  padding:6px 2px;
+  font-family:'Caveat',cursive;
+  font-size:1.1rem;
+  color:var(--ink);
+  outline:none;
+  width:100%;
+  resize:none;
+  transition:border-color 0.2s;
+  caret-color:var(--rust);
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus{
+  border-bottom-color:var(--gold);
+}
+input::placeholder,textarea::placeholder{
+  color:rgba(93,64,55,0.3);
+  font-style:italic;
+}
+
+textarea{
+  min-height:130px;
+  line-height:32px; /* align to ruled lines */
+  padding-top:4px;
+  border-bottom:none;
+  border:1.5px solid rgba(197,160,89,0.25);
+  border-radius:2px;
+  padding:8px 6px;
+  background:rgba(255,255,255,0.12);
+}
+textarea:focus{
+  border-color:rgba(197,160,89,0.6);
+  background:rgba(255,255,255,0.18);
+}
+
+/* ── CLOSING ── */
+.closing-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-top:20px;
+  gap:16px;
+}
+.closing-text{
+  font-family:'Caveat',cursive;
+  font-size:1rem;
+  color:rgba(93,64,55,0.6);
+  line-height:1.8;
+}
+.closing-sig{
+  font-family:'Great Vibes',cursive;
+  font-size:1.6rem;
+  color:var(--brown);
+  white-space:nowrap;
+}
+
+/* ── SEND BUTTON ── */
+.btn-send{
+  position:relative;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  display:flex;align-items:center;gap:10px;
+  font-family:'Crimson Text',serif;
+  font-size:0.78rem;
+  text-transform:uppercase;
+  letter-spacing:2.5px;
+  color:var(--ink);
+  transition:color 0.2s;
+}
+.btn-send:hover{color:var(--gold);}
+.btn-send:hover .send-icon{background:var(--gold);}
+.btn-send:disabled{opacity:0.4;cursor:default;}
+
+.send-icon{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--brown);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s,transform 0.2s;
+  box-shadow:0 3px 12px rgba(0,0,0,0.25);
+  flex-shrink:0;
+}
+.btn-send:hover .send-icon{transform:rotate(15deg) scale(1.08);}
+.send-icon svg{width:18px;height:18px;fill:#fff;}
+
+/* ── ENVELOPE BOTTOM ── */
+.envelope-bottom{
+  width:100%;
+  height:48px;
+  position:relative;
+  z-index:4;
+  overflow:hidden;
+}
+.envelope-bottom::before{
+  content:'';
+  position:absolute;
+  left:-5%;width:55%;height:100%;
+  background:linear-gradient(155deg,#b8943a 0%,#9a7520 100%);
+  transform-origin:bottom left;
+  transform:skewY(-8deg);
+  box-shadow:2px 0 8px rgba(0,0,0,0.2);
+}
+.envelope-bottom::after{
+  content:'';
+  position:absolute;
+  right:-5%;width:55%;height:100%;
+  background:linear-gradient(205deg,#c8a96e 0%,#a07828 100%);
+  transform-origin:bottom right;
+  transform:skewY(8deg);
+}
+
+/* Postage stamp */
+.stamp-corner{
+  position:absolute;
+  top:16px;right:52px;
+  width:52px;height:64px;
+  background:linear-gradient(135deg,#fff9ef,#f5e8cb);
+  border:1.5px solid rgba(197,160,89,0.5);
+  box-shadow:1px 2px 6px rgba(0,0,0,0.15);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:1.6rem;
+  padding:4px;
+  /* Perforated edge via box-shadow trick */
+  outline:3px dotted rgba(197,160,89,0.35);
+  outline-offset:2px;
+}
+.stamp-corner .stamp-label{
+  font-family:'Crimson Text',serif;
+  font-size:0.48rem;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--brown);
+  margin-top:3px;
+}
+
+/* ── SUCCESS STATE ── */
+.success-overlay{
+  position:absolute;inset:0;
+  background:var(--parchment);
+  background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:52px;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.5s ease;
+  z-index:20;
+  border-radius:3px;
+}
+.success-overlay.show{opacity:1;pointer-events:all;}
+.success-overlay h2{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;color:var(--brown);margin-bottom:12px;
+}
+.success-overlay p{
+  font-family:'Caveat',cursive;
+  font-size:1.1rem;color:rgba(93,64,55,0.7);
+  line-height:1.7;max-width:320px;
+}
+.success-emoji{font-size:3rem;margin-bottom:16px;animation:float 2.5s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+.btn-reset{
+  margin-top:24px;
+  background:none;border:none;
+  border-bottom:1px solid var(--gold);
+  font-family:'Crimson Text',serif;
+  font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;
+  color:var(--ink);cursor:pointer;padding:0 0 3px;
+  transition:color 0.2s;
+}
+.btn-reset:hover{color:var(--gold);}
+
+/* ── PAGE LABEL ── */
+.page-label{
+  font-family:'Crimson Text',serif;
+  font-size:0.68rem;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:rgba(197,160,89,0.35);
+  margin-bottom:24px;
+  text-align:center;
+}
+
+/* Back link */
+.back-link{
+  display:block;margin-top:28px;
+  font-family:'Crimson Text',serif;font-size:0.75rem;
+  color:rgba(197,160,89,0.4);text-decoration:none;
+  letter-spacing:1px;text-align:center;
+  transition:color 0.2s;
+}
+.back-link:hover{color:var(--gold);}
+
+/* ── ANIMATIONS ── */
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+.scene{animation:slideDown 0.7s cubic-bezier(0.34,1.2,0.64,1) both;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:560px){
+  .letter{padding:32px 24px 28px;}
+  .letter::after{left:44px;}
+  .field-row{grid-template-columns:1fr;}
+  .closing-row{flex-direction:column;align-items:flex-start;}
+  .stamp-corner{right:24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-label">Nanna's Pantry &nbsp;·&nbsp; Leave a Note</div>
+
+<div class="scene">
+
+  <!-- Envelope flap top (decorative) -->
+  <div class="envelope-back"></div>
+
+  <!-- The letter itself -->
+  <div class="letter-wrap">
+    <div class="letter" id="letter">
+
+      <!-- Postage stamp -->
+      <div class="stamp-corner">
+        🍞
+        <span class="stamp-label">Nanna's<br>Post</span>
+      </div>
+
+      <!-- Header -->
+      <div class="letter-header">
+        <h1>Drop a Note</h1>
+        <div class="dateline" id="dateline"></div>
+      </div>
+
+      <!-- Salutation -->
+      <div class="salutation">Dear Nanna,</div>
+
+      <!-- Form -->
+      <div class="field-row">
+        <div class="field-group">
+          <label>Your Name</label>
+          <input type="text" id="fname" placeholder="e.g. Mary" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label>Your Email</label>
+          <input type="email" id="femail" placeholder="you@example.com" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group full">
+          <label>Subject</label>
+          <input type="text" id="fsubject" placeholder="A question, a memory, a recipe request…">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group full">
+          <label>Your Message</label>
+          <textarea id="fmessage" placeholder="Write your note here…"></textarea>
+        </div>
+      </div>
+
+      <!-- Closing & send -->
+      <div class="closing-row">
+        <div>
+          <div class="closing-text">With warmth,</div>
+          <div class="closing-sig" id="sig-preview">Your Name</div>
+        </div>
+
+        <button class="btn-send" id="btnSend" onclick="sendNote()">
+          <span>Send Note</span>
+          <span class="send-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <!-- Success overlay (inside letter) -->
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-emoji">✉️</div>
+        <h2>Note Sent!</h2>
+        <p>Thank you for writing in. Nanna will read every word over a cup of tea.</p>
+        <button class="btn-reset" onclick="resetForm()">← Write another note</button>
+      </div>
+
+    </div><!-- /.letter -->
+  </div><!-- /.letter-wrap -->
+
+  <!-- Envelope bottom flap -->
+  <div class="envelope-bottom"></div>
+
+</div><!-- /.scene -->
+
+<a class="back-link" href="index.html">← back to index</a>
+
+<script>
+  // Live date
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var d=new Date();
+  document.getElementById('dateline').textContent=months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+
+  // Live signature preview
+  document.getElementById('fname').addEventListener('input',function(){
+    var v=this.value.trim();
+    document.getElementById('sig-preview').textContent=v||'Your Name';
+  });
+
+  function sendNote(){
+    var name    = document.getElementById('fname').value.trim();
+    var email   = document.getElementById('femail').value.trim();
+    var subject = document.getElementById('fsubject').value.trim();
+    var message = document.getElementById('fmessage').value.trim();
+
+    // Basic validation
+    if(!name){alert('Please enter your name.');document.getElementById('fname').focus();return;}
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');document.getElementById('femail').focus();return;}
+    if(!message){alert('Please write a message before sending.');document.getElementById('fmessage').focus();return;}
+
+    // Build mailto link — opens user's email client with the note pre-filled
+    var mailto='mailto:hello@nannaspantry.com'
+      +'?subject='+encodeURIComponent(subject||'A note from '+name)
+      +'&body='+encodeURIComponent(
+          'Name: '+name+'\n'
+         +'Email: '+email+'\n\n'
+         +message+'\n\n'
+         +'— Sent via Nanna\'s Pantry contact page'
+        );
+
+    // Open mail client
+    window.location.href=mailto;
+
+    // Show success state after short delay
+    setTimeout(function(){
+      document.getElementById('successOverlay').classList.add('show');
+    },400);
+  }
+
+  function resetForm(){
+    document.getElementById('fname').value='';
+    document.getElementById('femail').value='';
+    document.getElementById('fsubject').value='';
+    document.getElementById('fmessage').value='';
+    document.getElementById('sig-preview').textContent='Your Name';
+    document.getElementById('successOverlay').classList.remove('show');
+  }
+
+  // Allow Enter in fields to move to next, Ctrl/Cmd+Enter to send
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='Enter') sendNote();
+  });
+</script>
+</body>
+</html>

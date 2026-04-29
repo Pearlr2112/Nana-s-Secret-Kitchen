@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanna's Pantry | The Stable Heirloom Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:#120a07;
+  font-family:'Crimson Text',serif;
+  color:#2b1e16;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 16px 60px;
+}
+.book-wrap{width:100%;max-width:980px;position:relative;}
+.book{
+  width:100%;aspect-ratio:1.55/1;min-height:540px;
+  display:flex;position:relative;
+  border-radius:4px 12px 12px 4px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.95),0 8px 24px rgba(0,0,0,0.7);
+  overflow:hidden;
+}
+.page{
+  flex:1;
+  background:#eaddca;
+  background-image:url('https://www.transparenttextures.com/patterns/parchment.png');
+  padding:30px 38px;
+  display:flex;flex-direction:column;justify-content:flex-start;
+  overflow:hidden;position:relative;
+}
+.page-left{border-right:1px solid rgba(0,0,0,0.1);box-shadow:inset -12px 0 28px rgba(0,0,0,0.08);}
+.page-right{box-shadow:inset 12px 0 28px rgba(0,0,0,0.08);}
+.spine{
+  position:absolute;left:50%;top:0;bottom:0;width:40px;transform:translateX(-50%);
+  background:linear-gradient(to right,rgba(0,0,0,0) 0%,rgba(0,0,0,0.18) 45%,rgba(0,0,0,0.18) 55%,rgba(0,0,0,0) 100%);
+  z-index:10;pointer-events:none;
+}
+.page-turner{position:absolute;top:0;width:50%;height:100%;z-index:20;pointer-events:none;display:none;}
+.page-turner.right-turn{left:50%;transform-origin:left center;background:#eaddca;background-image:url('https://www.transparenttextures.com/patterns/parchment.png');}
+.page-turner.left-turn{left:0%;transform-origin:right center;background:#eaddca;background-image:url('https://www.transparenttextures.com/patterns/parchment.png');}
+.page-turner::after{content:'';position:absolute;inset:0;background:linear-gradient(to left,rgba(0,0,0,0) 30%,rgba(0,0,0,0.28) 80%,rgba(0,0,0,0.42) 100%);pointer-events:none;}
+.page-turner.left-turn::after{background:linear-gradient(to right,rgba(0,0,0,0) 30%,rgba(0,0,0,0.28) 80%,rgba(0,0,0,0.42) 100%);}
+.page-shadow{position:absolute;top:0;height:100%;width:40%;z-index:19;pointer-events:none;opacity:0;display:none;}
+.page-shadow.shadow-right{left:50%;background:linear-gradient(to right,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0) 100%);}
+.page-shadow.shadow-left{right:50%;background:linear-gradient(to left,rgba(0,0,0,0.22) 0%,rgba(0,0,0,0) 100%);}
+
+/* Typography */
+h1,h2,h3{font-family:'Great Vibes',cursive;color:#5d4037;margin-bottom:8px;}
+h1.title-main{color:#2b1b12;font-size:2.8rem;line-height:1.1;}
+p{font-size:1rem;line-height:1.6;margin-bottom:6px;color:#2b1e16;}
+.subtitle{font-size:0.65rem;text-transform:uppercase;letter-spacing:2.5px;opacity:0.5;margin-bottom:6px;}
+hr{border:none;border-top:1px solid rgba(0,0,0,0.15);margin:8px 0;}
+.handwritten{font-style:italic;font-size:1rem;line-height:1.6;color:#3d2b1f;}
+.section-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:3px;color:#8b6914;border-bottom:1px solid rgba(139,105,20,0.3);padding-bottom:3px;margin-bottom:8px;}
+
+/* Product Cards */
+.product-card{
+  display:flex;gap:10px;align-items:center;
+  background:rgba(255,255,255,0.28);
+  border:1px solid rgba(197,160,89,0.35);
+  border-radius:4px;padding:9px 10px;
+  margin-bottom:8px;
+  text-decoration:none;color:inherit;
+  transition:background 0.2s,box-shadow 0.2s,transform 0.15s;
+  position:relative;cursor:pointer;
+}
+.product-card:hover{
+  background:rgba(255,255,255,0.52);
+  box-shadow:0 3px 14px rgba(0,0,0,0.14);
+  transform:translateY(-1px);
+}
+.prod-icon{
+  width:56px;height:56px;flex-shrink:0;
+  background:linear-gradient(135deg,#fff9ef,#f0ddb8);
+  border:2px solid rgba(197,160,89,0.4);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;line-height:1;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,0.06);
+}
+.product-info{flex:1;min-width:0;}
+.product-name{font-family:'Crimson Text',serif;font-weight:700;font-size:0.9rem;color:#2b1b12;line-height:1.25;margin-bottom:2px;}
+.product-desc{font-family:'Crimson Text',serif;font-style:italic;font-size:0.77rem;color:#5d4037;line-height:1.3;margin:0;}
+.amz-badge{
+  font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;
+  color:#c5a059;border:1px solid rgba(197,160,89,0.5);border-radius:2px;
+  padding:2px 5px;white-space:nowrap;flex-shrink:0;
+  background:rgba(255,255,255,0.35);
+}
+
+/* Cover */
+.cover-label{font-family:'Great Vibes',cursive;font-size:1.3rem;color:#c5a059;margin-bottom:4px;}
+.cover-divider{width:60px;height:2px;background:linear-gradient(to right,transparent,#c5a059,transparent);margin:10px 0;}
+.seal{
+  width:76px;height:76px;border-radius:50%;
+  background:radial-gradient(circle,#c5a059 0%,#8b6914 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Great Vibes',cursive;font-size:0.78rem;color:#fff;
+  text-align:center;line-height:1.2;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3),inset 0 1px 3px rgba(255,255,255,0.3);
+  margin:14px auto 0;padding:10px;
+}
+.stamp{
+  display:inline-block;border:2px solid rgba(197,160,89,0.6);
+  padding:3px 8px;font-size:0.62rem;text-transform:uppercase;
+  letter-spacing:2px;color:#c5a059;opacity:0.8;transform:rotate(-2deg);margin-top:12px;
+}
+.tip-box{
+  margin-top:10px;padding:8px 12px;
+  background:rgba(197,160,89,0.1);border-left:3px solid #c5a059;
+  font-size:0.8rem;font-style:italic;color:#5d4037;
+}
+
+/* Nav */
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px;}
+.btn-flip{
+  background:none;border:none;border-bottom:1px solid #c5a059;
+  color:#2b1b12;font-family:'Crimson Text',serif;font-size:0.74rem;
+  text-transform:uppercase;letter-spacing:2px;cursor:pointer;padding:0 0 2px;transition:color 0.2s;
+}
+.btn-flip:hover{color:#c5a059;}
+
+/* Dots */
+.dots{display:flex;gap:9px;justify-content:center;margin-top:20px;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(197,160,89,0.2);border:1px solid #c5a059;cursor:pointer;transition:background 0.25s,transform 0.2s;}
+.dot.on{background:#c5a059;transform:scale(1.25);}
+
+/* Corners */
+.corner{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 48px 48px;border-color:transparent transparent rgba(197,160,89,0.5) transparent;cursor:pointer;z-index:30;transition:border-width 0.2s;}
+.corner:hover{border-width:0 0 62px 62px;border-color:transparent transparent rgba(197,160,89,0.8) transparent;}
+.corner-left{position:absolute;bottom:0;left:0;width:0;height:0;border-style:solid;border-width:48px 48px 0 0;border-color:transparent rgba(197,160,89,0.5) transparent transparent;cursor:pointer;z-index:30;transition:border-width 0.2s;}
+.corner-left:hover{border-width:62px 62px 0 0;border-color:transparent rgba(197,160,89,0.8) transparent transparent;}
+
+@media(max-width:600px){
+  .book{flex-direction:column;aspect-ratio:auto;border-radius:6px;}
+  .page{padding:22px 16px;}
+  .spine,.corner,.corner-left{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="book-wrap">
+  <div class="book" id="book">
+    <div class="page page-left"  id="pageL"></div>
+    <div class="page page-right" id="pageR"></div>
+    <div class="page-turner" id="turner"></div>
+    <div class="page-shadow"  id="pShadow"></div>
+    <div class="spine"></div>
+    <div class="corner"      id="cornerR"></div>
+    <div class="corner-left" id="cornerL"></div>
+  </div>
+  <div class="dots" id="dots"></div>
+</div>
+<a href="index.html" class="back-link">← back to index</a>
+<script>
+(function(){
+
+  // Build Amazon search URL — always resolves, never a broken product page
+  function amz(q){ return 'https://www.amazon.com/s?k='+encodeURIComponent(q)+'&tag=nannaspantry-20'; }
+
+  // Build a product card HTML string
+  function card(icon, name, desc, searchQuery){
+    return '<a class="product-card" href="'+amz(searchQuery)+'" target="_blank" rel="noopener">'
+      +'<div class="prod-icon">'+icon+'</div>'
+      +'<div class="product-info">'
+        +'<div class="product-name">'+name+'</div>'
+        +'<p class="product-desc">'+desc+'</p>'
+      +'</div>'
+      +'<span class="amz-badge">★ Amazon</span>'
+    +'</a>';
+  }
+
+  var TOTAL=5, cur=0, busy=false, DUR=480;
+
+  var spreads = [
+
+    /* ── 0: COVER ──────────────────────────────────────────────── */
+    {
+      left:`
+        <div style="height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+          <div class="cover-label">Welcome to</div>
+          <h1 class="title-main">Nanna's Pantry</h1>
+          <div class="cover-divider"></div>
+          <p class="subtitle">Heirloom Ingredients &amp; Trusted Tools</p>
+          <p class="handwritten" style="max-width:230px;margin-top:10px;">
+            "Every great dish begins with the right foundation. These are the ones I trust."
+          </p>
+          <div class="seal">Nanna's<br>Picks</div>
+          <div class="stamp">Est. 1954</div>
+        </div>`,
+      right:`
+        <h2 style="font-size:2rem;margin-bottom:6px;">How to Use This Guide</h2>
+        <hr>
+        <div class="handwritten" style="margin-bottom:10px;">
+          <p>Flip through each chapter to find the ingredients and tools I've relied on my whole life.</p>
+          <p>Every card links directly to Amazon — click to shop. I've tested each one. These are not substitutes. These are the real thing.</p>
+        </div>
+        <hr>
+        <div class="section-label">Inside you'll find</div>
+        <p style="font-size:0.92rem;line-height:2.2;color:#3d2b1f;">
+          ✦&nbsp; Flours &amp; Leaveners<br>
+          ✦&nbsp; Fats &amp; Sweeteners<br>
+          ✦&nbsp; Extracts &amp; Spices<br>
+          ✦&nbsp; Cast Iron &amp; Kitchen Tools
+        </p>
+        <div class="tip-box">Each product card opens an Amazon search in a new tab so you can compare options and choose the best listing.</div>`
+    },
+
+    /* ── 1: FLOURS & LEAVENERS ─────────────────────────────────── */
+    {
+      left:`
+        <div class="section-label">Chapter One</div>
+        <h2 style="font-size:2rem;margin-bottom:8px;">Flours &amp; Leaveners</h2>
+        <div class="handwritten" style="margin-bottom:10px;">
+          <p>"The foundation of every loaf, cake, and biscuit that ever came out of my oven starts right here."</p>
+        </div>
+        `+card('🌾','King Arthur All-Purpose Flour (5 lb)','Unbleached, unenriched — the gold standard for consistent baking results.','King Arthur All Purpose Flour 5 lb')
+         +card('🍞','King Arthur Bread Flour (5 lb)','Higher protein for chewier loaves and a proud rise. The secret to a proper sandwich bread.','King Arthur Bread Flour 5 lb')
+         +card('🧁','Clabber Girl Double-Act Baking Powder','The reliable lift behind every tall biscuit and fluffy layer cake.','Clabber Girl Baking Powder'),
+      right:`
+        <div class="section-label">Also in this Chapter</div>
+        `+card('🌰','Bob\'s Red Mill Super-Fine Almond Flour (3 lb)','Blanched and finely milled — ideal for macarons, tarts, and gluten-free shortbreads.','Bobs Red Mill Almond Flour 3 lb')
+         +card('🍃','Fleischmann\'s Active Dry Yeast (3-pack)','The yeast Nanna has kept in her cold pantry since 1962. Reliable as the sunrise.','Fleischmanns Active Dry Yeast')
+         +card('🧂','Morton Coarse Kosher Salt (3 lb)','The only salt in Nanna\'s kitchen. Bigger flakes mean more control — every time.','Morton Coarse Kosher Salt 3 lb')
+    },
+
+    /* ── 2: FATS & SWEETENERS ──────────────────────────────────── */
+    {
+      left:`
+        <div class="section-label">Chapter Two</div>
+        <h2 style="font-size:2rem;margin-bottom:8px;">Fats &amp; Sweeteners</h2>
+        <div class="handwritten" style="margin-bottom:10px;">
+          <p>"Butter makes everything better. Lard makes everything honest. Sugar is how we show love."</p>
+        </div>
+        `+card('🧈','Plugrá European-Style Unsalted Butter','Higher butterfat means flakier crusts and a more tender crumb. Worth every cent.','Plugra European Style Unsalted Butter')
+         +card('🍬','C&H Pure Cane Granulated Sugar (10 lb)','Finely milled, clean sweetness — no off-notes. Nanna\'s only choice for seven decades.','C&H Pure Cane Granulated Sugar')
+         +card('🍂','Domino Light Brown Sugar (4 lb)','Deep molasses undertone essential for chewy cookies and rich spice cakes.','Domino Light Brown Sugar 4 lb'),
+      right:`
+        <div class="section-label">Liquid Gold</div>
+        `+card('🫙','Crisco All-Vegetable Shortening (48 oz)','The pie crust secret — keeps gluten tender while butter keeps it flavorful.','Crisco All Vegetable Shortening')
+         +card('🍯','Raw Wildflower Honey (16 oz)','For drizzling, glazing, and the occasional spoonful straight from the jar.','raw wildflower honey 16 oz')
+         +card('🫙','Grandma\'s Original Robust Molasses','Dark, deep, irreplaceable. Gingerbread is not gingerbread without it.','Grandmas Molasses Robust Original')
+    },
+
+    /* ── 3: EXTRACTS & SPICES ──────────────────────────────────── */
+    {
+      left:`
+        <div class="section-label">Chapter Three</div>
+        <h2 style="font-size:2rem;margin-bottom:8px;">Extracts &amp; Spices</h2>
+        <div class="handwritten" style="margin-bottom:10px;">
+          <p>"A good vanilla can save a mediocre recipe. A great vanilla makes a simple one unforgettable."</p>
+        </div>
+        `+card('🫙','Nielsen-Massey Pure Vanilla Extract (4 oz)','Cold-extraction preserves 300+ flavor compounds. No imitation — ever.','Nielsen Massey Pure Vanilla Extract 4 oz')
+         +card('🍂','McCormick Ground Cinnamon (18 oz)','Warm, sweet, and consistent. The scent of every one of Nanna\'s kitchen mornings.','McCormick Ground Cinnamon large')
+         +card('🌰','Whole Nutmeg for Grating','Grate fresh over custards and spice cakes. Pre-ground is a shadow of the real thing.','whole nutmeg for grating'),
+      right:`
+        <div class="section-label">The Spice Drawer</div>
+        `+card('🌿','Ground Cardamom (organic)','Floral, citrusy warmth — Nanna\'s secret in apple cake and Swedish coffee bread.','organic ground cardamom')
+         +card('🍫','Valrhona Pure Cocoa Powder (8.8 oz)','French dutched cocoa. Deep burgundy color, intense chocolate flavor.','Valrhona Pure Cocoa Powder')
+         +card('🫚','Simply Organic Ground Allspice','Three spices in one — clove, cinnamon, nutmeg. The backbone of every fruit cake.','Simply Organic Ground Allspice')
+    },
+
+    /* ── 4: CAST IRON & TOOLS ──────────────────────────────────── */
+    {
+      left:`
+        <div class="section-label">Chapter Four</div>
+        <h2 style="font-size:2rem;margin-bottom:8px;">Cast Iron &amp; Tools</h2>
+        <div class="handwritten" style="margin-bottom:10px;">
+          <p>"The right tool becomes part of the story. My skillet is older than your mother."</p>
+        </div>
+        `+card('🍳','Lodge 10.25″ Pre-Seasoned Cast Iron Skillet','American-made and indestructible. Nanna has used hers since the day she married.','Lodge 10.25 inch cast iron skillet pre seasoned')
+         +card('🫕','Lodge 5 Qt. Cast Iron Dutch Oven','For no-knead bread, stews, and Sunday pot roast. One pot to rule them all.','Lodge 5 quart cast iron dutch oven')
+         +card('🍞','Nordic Ware Natural Aluminum Loaf Pan','Heavy-gauge for even baking — Nanna\'s banana bread slides right out every time.','Nordic Ware Natural Aluminum Loaf Pan'),
+      right:`
+        <div class="section-label">More Trusted Tools</div>
+        `+card('🎂','KitchenAid Artisan 5 Qt. Stand Mixer','The workhorse of every serious baker\'s kitchen. Nanna received hers as a wedding gift.','KitchenAid Artisan 5 quart stand mixer')
+         +card('🥐','French Tapered Beechwood Rolling Pin','Elegant taper gives you feel and control. Belongs in your hands like nothing else.','French tapered beechwood rolling pin')
+         +card('⚖️','OXO Good Grips 11 lb Digital Kitchen Scale','Baking by weight is baking with precision. The one upgrade that changes everything.','OXO Good Grips kitchen scale 11 lb')
+    }
+
+  ];
+  
+
+  /* ── Dots ── */
+  var dotsEl=document.getElementById('dots');
+  for(var i=0;i<TOTAL;i++){
+    (function(idx){
+      var d=document.createElement('div');
+      d.className='dot'+(idx===0?' on':'');
+      d.addEventListener('click',function(){ if(idx>cur)next();else if(idx<cur)prev(); });
+      dotsEl.appendChild(d);
+    })(i);
+  }
+  function updateDots(){
+    dotsEl.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===cur);});
+  }
+
+  var pageL=document.getElementById('pageL');
+  var pageR=document.getElementById('pageR');
+  var turner=document.getElementById('turner');
+  var pShadow=document.getElementById('pShadow');
+  var cornerR=document.getElementById('cornerR');
+  var cornerL=document.getElementById('cornerL');
+
+  function navHTML(idx){
+    var h='<div class="nav-row">';
+    h+=idx>0?'<button class="btn-flip btn-prev">← Previous</button>':'<span></span>';
+    h+=idx<TOTAL-1?'<button class="btn-flip btn-next">Next Chapter →</button>':'<span></span>';
+    return h+'</div>';
+  }
+  function attachNav(){
+    var n=document.querySelector('.btn-next'),p=document.querySelector('.btn-prev');
+    if(n)n.addEventListener('click',next);
+    if(p)p.addEventListener('click',prev);
+  }
+  function render(idx){
+    pageL.innerHTML=spreads[idx].left+navHTML(idx);
+    pageR.innerHTML=spreads[idx].right;
+    attachNav();
+    cornerL.style.visibility=idx===0?'hidden':'visible';
+    cornerR.style.visibility=idx===TOTAL-1?'hidden':'visible';
+    updateDots();
+  }
+  function flipSetup(dir){
+    // dir: 'next' or 'prev'
+    if(dir==='next'){
+      pageR.innerHTML=spreads[cur+1].right;
+      turner.className='page-turner right-turn';
+      turner.style.cssText='display:block;left:50%;width:50%;transform-origin:left center;transform:scaleX(1);transition:none;';
+      pShadow.className='page-shadow shadow-right';
+      pShadow.style.cssText='display:block;opacity:0;transition:none;';
+      void turner.offsetWidth;
+      turner.style.transition='transform '+DUR+'ms cubic-bezier(0.4,0,0.6,1)';
+      turner.style.transform='scaleX(0)';
+      pShadow.style.transition='opacity '+(DUR*0.6)+'ms ease-out '+(DUR*0.2)+'ms';
+      pShadow.style.opacity='0.6';
+    } else {
+      pageL.innerHTML=spreads[cur-1].left;
+      turner.className='page-turner left-turn';
+      turner.style.cssText='display:block;left:0%;width:50%;transform-origin:right center;transform:scaleX(0);transition:none;';
+      pShadow.className='page-shadow shadow-left';
+      pShadow.style.cssText='display:block;opacity:0.5;transition:none;';
+      void turner.offsetWidth;
+      turner.style.transition='transform '+DUR+'ms cubic-bezier(0.4,0,0.6,1)';
+      turner.style.transform='scaleX(1)';
+      pShadow.style.transition='opacity '+(DUR*0.5)+'ms ease-in';
+      pShadow.style.opacity='0';
+    }
+  }
+  function flipFinish(){
+    turner.style.display='none'; pShadow.style.display='none';
+    pageL.innerHTML=spreads[cur].left+navHTML(cur);
+    pageR.innerHTML=spreads[cur].right;
+    attachNav();
+    cornerL.style.visibility=cur===0?'hidden':'visible';
+    cornerR.style.visibility=cur===TOTAL-1?'hidden':'visible';
+    updateDots(); busy=false;
+  }
+  function next(){
+    if(busy||cur>=TOTAL-1)return; busy=true;
+    flipSetup('next');
+    setTimeout(function(){ cur++; flipFinish(); }, DUR+40);
+  }
+  function prev(){
+    if(busy||cur<=0)return; busy=true;
+    flipSetup('prev');
+    setTimeout(function(){ cur--; flipFinish(); }, DUR+40);
+  }
+
+  cornerR.addEventListener('click',next);
+  cornerL.addEventListener('click',prev);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();
+  });
+  var tx=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>50){dx<0?next():prev();}
+  },{passive:true});
+
+  render(0);
+})();
+</script>
+</body>
+</html>

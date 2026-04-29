@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nana's Secret Recipe Book</title>
@@ -17,7 +18,23 @@
         }
 
         .book-stage {
-            background: #120a07 url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            background-color: #120a07;
+            background-image:
+                repeating-linear-gradient(
+                    92deg,
+                    rgba(255,255,255,0.012) 0px,
+                    rgba(255,255,255,0.012) 1px,
+                    transparent 1px,
+                    transparent 40px
+                ),
+                repeating-linear-gradient(
+                    88deg,
+                    rgba(255,255,255,0.008) 0px,
+                    rgba(255,255,255,0.008) 1px,
+                    transparent 1px,
+                    transparent 25px
+                ),
+                linear-gradient(180deg, #1a0d08 0%, #120a05 50%, #0e0804 100%);
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -72,8 +89,26 @@
         }
 
         .book-cover-front {
-            background: #2b1b12 url('https://www.transparenttextures.com/patterns/leather.png');
-            filter: contrast(1.1) sepia(0.3); 
+            background-color: #2b1b12;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255,255,255,0.015) 0px,
+                    rgba(255,255,255,0.015) 1px,
+                    transparent 1px,
+                    transparent 6px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    rgba(255,255,255,0.015) 0px,
+                    rgba(255,255,255,0.015) 1px,
+                    transparent 1px,
+                    transparent 6px
+                ),
+                radial-gradient(ellipse at 20% 30%, rgba(80,45,20,0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(15,8,4,0.5) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, #3a2216 0%, #1e1008 100%);
+            filter: none; 
             z-index: 10;
             border-radius: 5px 18px 18px 5px;
             display: flex;
@@ -105,14 +140,53 @@
             transform: rotateY(-180deg);
         }
 
+        .holo-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 5px 18px 18px 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            background: 
+                radial-gradient(ellipse at var(--mx, 50%) var(--my, 50%), 
+                    rgba(255,210,140,0.45) 0%, 
+                    transparent 60%),
+                linear-gradient(
+                    var(--angle, 135deg),
+                    hsla(20,50%,15%,0.6) 0%,
+                    hsla(35,65%,40%,0.5) 20%,
+                    hsla(42,80%,62%,0.45) 35%,
+                    hsla(30,60%,30%,0.5) 50%,
+                    hsla(25,55%,20%,0.6) 65%,
+                    hsla(40,70%,50%,0.45) 80%,
+                    hsla(28,55%,25%,0.6) 100%
+                );
+            mix-blend-mode: soft-light;
+            z-index: 11;
+        }
+
+        .book-cover-front:hover .holo-overlay,
+        .book-container:not(.is-open):hover .holo-overlay {
+            opacity: 1;
+        }
+
         .page-inside {
-            background: #eaddca url('https://www.transparenttextures.com/patterns/parchment.png');
+            background-color: #eaddca;
+            background-image:
+                radial-gradient(ellipse at 10% 10%, rgba(255,248,235,0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(200,175,140,0.4) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    102deg,
+                    rgba(0,0,0,0.012) 0px,
+                    transparent 1px,
+                    transparent 8px
+                ),
+                radial-gradient(circle at bottom right, transparent 60%, rgba(0,0,0,0.08) 100%);
             padding: 60px;
             font-family: 'Crimson Text', serif;
             color: #2b1e16;
-            background-image: radial-gradient(circle at bottom right, transparent 60%, rgba(0,0,0,0.08) 100%);
             box-shadow: inset 5px 0 15px rgba(0,0,0,0.2);
-            overflow: hidden; /* FIX */
+            overflow: hidden;
         }
 
         .page-left {
@@ -128,11 +202,50 @@
 
         .page-right {
             z-index: 1;
-            overflow-y: auto; /* FIX */
+            overflow-y: auto;
         }
 
-        .recipe-list { list-style: none; padding: 0; }
-        .recipe-list li { border-bottom: 1px dotted rgba(0,0,0,0.3); padding: 12px 0; font-size: 1.4rem; }
+        .recipe-list { list-style: none; padding: 0; margin: 0; }
+        .recipe-list li {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 16px;
+            font-size: 1.15rem;
+        }
+        .recipe-list li .toc-number {
+            font-size: 0.85rem;
+            color: #8b6f5e;
+            margin-right: 8px;
+            min-width: 22px;
+            font-style: italic;
+        }
+        .recipe-list li a {
+            cursor: pointer;
+            text-decoration: none;
+            color: #2b1e16;
+            transition: color 0.2s;
+            white-space: nowrap;
+            font-size: 1.15rem;
+        }
+        .recipe-list li a:hover { color: #c5a059; }
+        .recipe-list li .toc-dots {
+            flex: 1;
+            border-bottom: 1.5px dotted #a08878;
+            margin: 0 8px 4px 8px;
+            min-width: 20px;
+        }
+        .recipe-list li .toc-page {
+            font-size: 0.95rem;
+            color: #5d4037;
+            font-style: italic;
+            min-width: 16px;
+            text-align: right;
+        }
+        .toc-divider {
+            border: none;
+            border-top: 1px solid rgba(0,0,0,0.12);
+            margin: 16px 0 14px 0;
+        }
         .handwritten { font-style: italic; font-size: 1.35rem; line-height: 1.6; color: #3d2b1f; }
         
         .hint {
@@ -160,19 +273,49 @@
         <div class="book-container" id="recipeBook">
             
             <div class="book-page book-cover-front">
+                <div class="holo-overlay" id="holoOverlay"></div>
                 <div class="book-title-gold">Nana's<br>Secret Recipes</div>
             </div>
 
             <div class="book-page page-inside page-left">
                 <div style="transform: scaleX(-1);"> 
-                    <h2 style="font-family: 'Great Vibes'; margin-bottom: 30px; font-size: 3rem;">The Index</h2>
+                    <h2 style="font-family: 'Great Vibes'; margin-bottom: 4px; font-size: 3rem;">The Index</h2>
+                    <p style="font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #a08878; margin-bottom: 20px;">Table of Contents</p>
+                    <hr class="toc-divider">
                     <ul class="recipe-list">
-                        <li>❧ Recipes</li>
-                        <li>❧ About the Kitchen</li>
-                        <li>❧ Seasonal Products</li>
-                        <li>❧ Contact</li>
+                        <li>
+                            <span class="toc-number">I.</span>
+                            <a onclick="window.location.href='product.html'">Products</a>
+                            <span class="toc-dots"></span>
+                            <span class="toc-page">1</span>
+                        </li>
+                        <li>
+                            <span class="toc-number">II.</span>
+                            <a onclick="window.location.href='about.html'">About</a>
+                            <span class="toc-dots"></span>
+                            <span class="toc-page">12</span>
+                        </li>
+                                                <li>
+                            <span class="toc-number">II.</span>
+                            <a onclick="window.location.href='notes.html'">Notes</a>
+                            <span class="toc-dots"></span>
+                            <span class="toc-page">16</span>
+                        </li>
+                        <li>
+                            <span class="toc-number">II.</span>
+                            <a onclick="window.location.href='snapshot.html'">Recipes</a>
+                            <span class="toc-dots"></span>
+                            <span class="toc-page">28</span>
+                        </li>
+                        <li>
+                            <span class="toc-number">IV.</span>
+                            <a onclick="window.location.href='contact.html'">Contact</a>
+                            <span class="toc-dots"></span>
+                            <span class="toc-page">36</span>
+                        </li>
                     </ul>
-                    <p class="mt-5 fst-italic text-muted" style="font-size: 1.1rem;">"Property of Nana's Kitchen"</p>
+                    <hr class="toc-divider">
+                    <p class="fst-italic" style="font-size: 1rem; color: #8b6f5e; margin-top: 16px;">"Property of Nana's Kitchen"</p>
                 </div>
             </div>
 
@@ -184,14 +327,14 @@
                 <div class="handwritten">
                     <p>My dear,</p>
                     <p>
-                        If you’re reading this, it means you’ve found your way into my little collection of recipes — 
+                        If you're reading this, it means you've found your way into my little collection of recipes — 
                         the ones that filled our home with warmth and laughter.
                     </p>
                     <p>
-                        Don’t worry if things don't come out perfect. Add your own touch, make a mess, and laugh. 
-                        That’s how traditions grow.
+                        Don't worry if things don't come out perfect. Add your own touch, make a mess, and laugh. 
+                        That's how traditions grow.
                     </p>
-                    <p style="margin-bottom: 5px;">Food tastes better when it’s given with love.</p>
+                    <p style="margin-bottom: 5px;">Food tastes better when it's given with love.</p>
                     
                     <div style="font-family: 'Great Vibes'; font-size: 2.5rem; text-align: right; margin-top: 30px; color: #5d4037;">
                         With all my heart, <br>
@@ -208,8 +351,21 @@
 
     <script>
         const book = document.getElementById('recipeBook');
+        const holo = document.getElementById('holoOverlay');
+        const cover = document.querySelector('.book-cover-front');
+
         book.addEventListener('click', () => {
             book.classList.toggle('is-open');
+        });
+
+        cover.addEventListener('mousemove', (e) => {
+            const rect = cover.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            const angle = Math.atan2(e.clientY - (rect.top + rect.height / 2), e.clientX - (rect.left + rect.width / 2)) * (180 / Math.PI) + 180;
+            holo.style.setProperty('--mx', x + '%');
+            holo.style.setProperty('--my', y + '%');
+            holo.style.setProperty('--angle', angle + 'deg');
         });
     </script>
 
