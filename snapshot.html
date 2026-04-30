@@ -26,22 +26,11 @@
         }
         .site-header a { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 3rem; text-decoration: none; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
         .btn-back {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: 'Crimson Text', serif;
-            font-size: 0.9rem;
-            color: var(--gold);
-            background: transparent;
-            border: 1px solid rgba(197,160,89,0.45);
-            border-radius: 6px;
-            padding: 6px 14px;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: 1px;
-            transition: background 0.2s, border-color 0.2s;
-            white-space: nowrap;
+            position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            font-family: 'Crimson Text', serif; font-size: 0.9rem; color: var(--gold);
+            background: transparent; border: 1px solid rgba(197,160,89,0.45);
+            border-radius: 6px; padding: 6px 14px; cursor: pointer; text-decoration: none;
+            letter-spacing: 1px; transition: background 0.2s, border-color 0.2s; white-space: nowrap;
         }
         .btn-back:hover { background: rgba(197,160,89,0.12); border-color: var(--gold); }
 
@@ -83,45 +72,22 @@
         .ingredient-section h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sepia); opacity: 0.7; margin-bottom: 6px; }
 
         .recipe-card {
-            background: rgba(255,255,255,0.45);
-            border-radius: 10px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(197,160,89,0.35);
-            overflow: hidden;
+            background: rgba(255,255,255,0.45); border-radius: 10px; margin-bottom: 12px;
+            border: 1px solid rgba(197,160,89,0.35); overflow: hidden;
             transition: transform 0.15s, box-shadow 0.15s;
         }
         .recipe-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
-        .recipe-card a {
-            display: flex;
-            gap: 12px;
-            padding: 12px;
-            text-decoration: none;
-            color: var(--ink);
-        }
+        .recipe-card a { display: flex; gap: 12px; padding: 12px; text-decoration: none; color: var(--ink); }
         .recipe-thumb {
-            width: 80px;
-            height: 56px;
-            border-radius: 6px;
-            flex-shrink: 0;
+            width: 80px; height: 56px; border-radius: 6px; flex-shrink: 0;
             background: linear-gradient(135deg, rgba(197,160,89,0.25), rgba(93,64,55,0.15));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            border: 1px solid rgba(197,160,89,0.2);
-            position: relative;
+            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+            border: 1px solid rgba(197,160,89,0.2); position: relative;
         }
         .recipe-thumb::after {
-            content: '▶';
-            position: absolute;
-            bottom: 3px;
-            right: 3px;
-            background: #ff0000;
-            color: white;
-            font-size: 0.45rem;
-            padding: 1px 4px;
-            border-radius: 2px;
-            line-height: 1.8;
+            content: '▶'; position: absolute; bottom: 3px; right: 3px;
+            background: #ff0000; color: white; font-size: 0.45rem; padding: 1px 4px;
+            border-radius: 2px; line-height: 1.8;
         }
         .recipe-info { flex: 1; min-width: 0; }
         .recipe-name { font-weight: 700; font-size: 0.95rem; color: var(--sepia); line-height: 1.3; margin-bottom: 3px; }
@@ -131,14 +97,7 @@
         .recipe-badge { font-size: 0.7rem; background: rgba(197,160,89,0.2); padding: 1px 7px; border-radius: 10px; color: var(--sepia); }
         .yt-badge { background: rgba(255,0,0,0.1); color: #c00; border: 1px solid rgba(255,0,0,0.15); }
 
-        .spoon-card {
-            background: rgba(255,255,255,0.45);
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(197,160,89,0.35);
-            padding: 10px;
-            overflow: hidden;
-        }
+        .spoon-card { background: rgba(255,255,255,0.45); border-radius: 10px; margin-bottom: 10px; border: 1px solid rgba(197,160,89,0.35); padding: 10px; overflow: hidden; }
         .spoon-card img { width: 100%; border-radius: 6px; margin-bottom: 6px; border: 3px solid white; }
         .spoon-card h3 { font-size: 0.95rem; color: var(--sepia); font-weight: 700; margin-bottom: 4px; }
         .spoon-card p { font-size: 0.82rem; opacity: 0.75; }
@@ -149,7 +108,7 @@
 
         #left-preview, #left-loading, #left-ingredients { display: none; }
         #right-loading, #right-results { display: none; }
-        #right-empty { text-align: center; margin-top: 80px; opacity: 0.5; }
+        #right-empty { text-align: center; margin-top: 20px; }
 
         .page::-webkit-scrollbar { width: 4px; }
         .page::-webkit-scrollbar-thumb { background: rgba(93,64,55,0.3); border-radius: 4px; }
@@ -187,6 +146,11 @@
         .btn-search-reset { padding: 9px 12px; background: transparent; color: var(--sepia); border: 1px solid rgba(93,64,55,0.3); border-radius: 6px; cursor: pointer; font-family: 'Crimson Text', serif; font-size: 0.9rem; transition: border-color 0.2s; }
         .btn-search-reset:hover { border-color: var(--sepia); }
         #searchResults { margin-top: 10px; }
+
+        /* Recently Searched */
+        .recent-section { margin-bottom: 4px; }
+        .recent-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--sepia); opacity: 0.6; text-align: center; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; justify-content: center; }
+        .recent-label::before, .recent-label::after { content: ''; flex: 1; border-top: 1px dotted rgba(93,64,55,0.3); }
 
         @media (max-width: 920px) {
             :root { --page-w: 90vw; --page-h: auto; }
@@ -261,7 +225,13 @@
                 <h2 class="page-heading">Nana's Notes</h2>
                 <hr class="page-rule">
 
-                <div id="right-empty">
+                <!-- Recently Searched Recipes -->
+                <div class="recent-section" id="recentSection">
+                    <p class="recent-label">⏱ Recently Searched</p>
+                    <div id="recentRecipes"></div>
+                </div>
+
+                <div id="right-empty" style="display:none;">
                     <span style="font-size:4rem">🥣</span>
                     <p style="margin-top:10px;">Waiting for ingredients…</p>
                 </div>
@@ -306,14 +276,80 @@
 
     <script>
 const $ = id => document.getElementById(id);
-const OR_API_KEY = "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";
-const SPOON_KEY  = "bc138f524fe840a4b37027d0b2a0c94d";
+const OR_API_KEY = "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";
+const SPOON_KEY  = "b62fdc4c929d4bcb80570700a0a0e643";
 const CORS_PROXY = "https://corsproxy.io/?url=";
 
 let base64Image = "", mimeType = "image/jpeg";
 let detectedIngredients = [], analysisResult = {};
 let cameraStream = null, stepTimer = null;
 
+/* ── RECENTLY SEARCHED ── */
+const RECENT_RECIPES = [
+    {
+        name: "Garlic Butter Shrimp Pasta",
+        description: "Juicy shrimp tossed with linguine in a rich garlic-butter white wine sauce — ready in under 30 minutes.",
+        time: "25 mins",
+        difficulty: "Easy",
+        emoji: "🍝",
+        ingredients: ["shrimp", "garlic", "pasta", "butter"]
+    },
+    {
+        name: "Classic French Omelette",
+        description: "Silky, barely-set eggs folded around a herby filling — the benchmark of technique and simplicity.",
+        time: "10 mins",
+        difficulty: "Medium",
+        emoji: "🍳",
+        ingredients: ["eggs", "butter", "chives", "gruyère"]
+    },
+    {
+        name: "Roasted Veggie Curry",
+        description: "Cauliflower, chickpeas and sweet potato slow-simmered in a spiced tomato coconut broth.",
+        time: "40 mins",
+        difficulty: "Easy",
+        emoji: "🍛",
+        ingredients: ["cauliflower", "chickpeas", "tomatoes", "coconut milk"]
+    },
+    {
+        name: "Honey Garlic Chicken Thighs",
+        description: "Sticky, caramelised thighs glazed with honey, soy and garlic — crispy skin, fall-off-the-bone tender.",
+        time: "35 mins",
+        difficulty: "Easy",
+        emoji: "🍗",
+        ingredients: ["chicken thighs", "garlic", "honey", "soy sauce"]
+    }
+];
+
+function diffColor(d) {
+    return d === 'Hard' ? '#8b2020' : d === 'Medium' ? '#7a5440' : '#2d6a2d';
+}
+
+function buildRecipeCard(r) {
+    const ytURL = youtubeSearchURL(r.name, r.ingredients || []);
+    return `
+    <div class="recipe-card">
+        <a href="${ytURL}" target="_blank" rel="noopener noreferrer">
+            <div class="recipe-thumb">${r.emoji || '🍴'}</div>
+            <div class="recipe-info">
+                <div class="recipe-name">${r.name}</div>
+                <div class="recipe-desc">${r.description || ''}</div>
+                <div class="recipe-badges">
+                    ${r.time ? `<span class="recipe-badge">⏱ ${r.time}</span>` : ''}
+                    ${r.difficulty ? `<span class="recipe-badge" style="color:${diffColor(r.difficulty)}">📊 ${r.difficulty}</span>` : ''}
+                    <span class="recipe-badge yt-badge">▶ YouTube</span>
+                </div>
+            </div>
+        </a>
+    </div>`;
+}
+
+function renderRecentRecipes() {
+    $('recentRecipes').innerHTML = RECENT_RECIPES.map(buildRecipeCard).join('');
+}
+
+renderRecentRecipes();
+
+/* ── SHOW / HIDE HELPERS ── */
 function showLeft(id) {
     ['upload','preview','loading','ingredients'].forEach(s => {
         $('left-' + s).style.display = s === id ? 'block' : 'none';
@@ -322,17 +358,20 @@ function showLeft(id) {
 }
 
 function showRight(id) {
+    // Hide recent section when AI results are showing
+    $('recentSection').style.display = (id === 'empty' || id === 'recent') ? 'block' : 'none';
     ['empty','loading','results'].forEach(s => {
         $('right-' + s).style.display = s === id ? 'block' : 'none';
     });
 }
 
 function resetToUpload() {
-    showLeft('upload'); showRight('empty');
+    showLeft('upload'); showRight('recent');
     base64Image = ''; detectedIngredients = []; analysisResult = {};
     $('fileInput').value = '';
 }
 
+/* ── STEP ANIMATION ── */
 function startStepAnimation() {
     const steps = ['step1','step2','step3','step4'];
     let current = 0;
@@ -353,6 +392,7 @@ function stopStepAnimation() {
     ['step1','step2','step3','step4'].forEach(s => $(s).className = 'step');
 }
 
+/* ── FILE UPLOAD ── */
 $('fileInput').addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -366,6 +406,7 @@ $('fileInput').addEventListener('change', e => {
     reader.readAsDataURL(file);
 });
 
+/* ── CAMERA ── */
 async function openCamera() {
     try {
         cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
@@ -391,6 +432,7 @@ function takeSnapshot() {
     showLeft('preview');
 }
 
+/* ── AI HELPERS ── */
 const VISION_MODELS = [
     "google/gemma-3-27b-it",
     "google/gemma-3-12b-it",
@@ -475,6 +517,7 @@ function recipeEmoji(name = '') {
     return '🍴';
 }
 
+/* ── ANALYZE IMAGE ── */
 $('analyzeBtn').onclick = async () => {
     if (!base64Image) return;
     showLeft('loading');
@@ -512,6 +555,7 @@ Return ONLY a valid JSON object with no markdown, no explanation:
     }
 };
 
+/* ── FIND RECIPES ── */
 $('findVideosBtn').onclick = async () => {
     showRight('loading');
     const list = detectedIngredients.join(', ');
@@ -539,7 +583,7 @@ Difficulty must be one of: Easy, Medium, or Hard.`;
         $('recipeGrid').innerHTML = recipes.map(r => {
             const emoji = recipeEmoji(r.name);
             const ytURL = youtubeSearchURL(r.name, detectedIngredients);
-            const diffColor = r.difficulty === 'Hard' ? '#8b2020' : r.difficulty === 'Medium' ? '#7a5440' : '#2d6a2d';
+            const dc = diffColor(r.difficulty);
             return `
             <div class="recipe-card">
                 <a href="${ytURL}" target="_blank" rel="noopener noreferrer">
@@ -549,7 +593,7 @@ Difficulty must be one of: Easy, Medium, or Hard.`;
                         <div class="recipe-desc">${r.description || ''}</div>
                         <div class="recipe-badges">
                             ${r.time ? `<span class="recipe-badge">⏱ ${r.time}</span>` : ''}
-                            ${r.difficulty ? `<span class="recipe-badge" style="color:${diffColor}">📊 ${r.difficulty}</span>` : ''}
+                            ${r.difficulty ? `<span class="recipe-badge" style="color:${dc}">📊 ${r.difficulty}</span>` : ''}
                             <span class="recipe-badge yt-badge">▶ YouTube</span>
                         </div>
                     </div>
@@ -584,6 +628,7 @@ Difficulty must be one of: Easy, Medium, or Hard.`;
     }
 };
 
+/* ── INGREDIENT SEARCH ── */
 let searchIngredients = [];
 
 function renderChips() {
@@ -634,8 +679,7 @@ async function runIngredientSearch() {
         CORS_PROXY + encodeURIComponent(spoonURL)
     ];
 
-    let data = null;
-    let lastErr = null;
+    let data = null, lastErr = null;
 
     for (const url of urlsToTry) {
         try {
@@ -646,9 +690,7 @@ async function runIngredientSearch() {
             }
             data = await res.json();
             break;
-        } catch (e) {
-            lastErr = e;
-        }
+        } catch (e) { lastErr = e; }
     }
 
     btn.disabled = false;
@@ -684,6 +726,54 @@ async function runIngredientSearch() {
     }).join('');
 }
     </script>
-    <a href="index.html" style="margin-top:12px; font-family:'Crimson Text',serif; font-size:0.78rem; color:rgba(197,160,89,0.5); text-decoration:none; letter-spacing:1px;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(197,160,89,0.5)'">← back to index</a>
+<a href="index.html" style="display:block; margin-top:14px; text-align:center; font-family:'Crimson Text',serif; font-size:0.78rem; color:rgb(255, 0, 0); text-decoration:none; letter-spacing:1px;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(197,160,89,0.5)'">← back to index</a>
+    <!-- ── FOOTER ── -->
+<footer style="width:100%;max-width:980px;margin-top:48px;padding:0 16px 40px;">
+  <div style="background:#1a0e09;border-top:1px solid rgba(197,160,89,0.3);border-radius:0 0 8px 8px;padding:48px 40px 32px;font-family:'Crimson Text',serif;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:40px;">
+      <div>
+        <h4 style="font-family:'Great Vibes',cursive;color:#c5a059;font-size:1.8rem;margin-bottom:14px;">Get in Touch</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;color:rgba(234,221,202,0.75);font-size:1rem;line-height:1.6;">
+          <span>📍 14 Willow Creek Lane<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Willow Creek, TX 78201</span>
+          <a href="tel:+15125550178" style="color:rgba(234,221,202,0.75);text-decoration:none;">📞 (512) 555-0178</a>
+          <a href="mailto:jenna@thestableheirloom.com" style="color:#c5a059;text-decoration:none;">✉️ jenna@thestableheirloom.com</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family:'Great Vibes',cursive;color:#c5a059;font-size:1.8rem;margin-bottom:14px;">Letters from the Kitchen</h4>
+        <p style="color:rgba(234,221,202,0.6);font-size:0.92rem;margin-bottom:14px;line-height:1.5;">Recipes, stories & heirlooms — delivered to your inbox.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <input type="email" placeholder="your@email.com" style="background:rgba(255,255,255,0.07);border:1px solid rgba(197,160,89,0.35);border-radius:3px;padding:10px 14px;color:#eaddca;font-family:'Crimson Text',serif;font-size:1rem;outline:none;" onfocus="this.style.borderColor='rgba(197,160,89,0.8)'" onblur="this.style.borderColor='rgba(197,160,89,0.35)'">
+          <button style="background:rgba(197,160,89,0.15);border:1px solid #c5a059;color:#c5a059;font-family:'Crimson Text',serif;font-size:0.78rem;text-transform:uppercase;letter-spacing:2px;padding:10px;border-radius:3px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(197,160,89,0.28)'" onmouseout="this.style.background='rgba(197,160,89,0.15)'">Subscribe →</button>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family:'Great Vibes',cursive;color:#c5a059;font-size:1.8rem;margin-bottom:14px;">Find Jenna</h4>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a href="https://instagram.com/thestableheirloom" target="_blank" style="display:flex;align-items:center;gap:10px;color:rgba(234,221,202,0.75);text-decoration:none;font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(234,221,202,0.75)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            @thestableheirloom
+          </a>
+          <a href="https://pinterest.com/thestableheirloom" target="_blank" style="display:flex;align-items:center;gap:10px;color:rgba(234,221,202,0.75);text-decoration:none;font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(234,221,202,0.75)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.76 1.24-5.26 1.24-5.26s-.32-.63-.32-1.56c0-1.46.85-2.55 1.9-2.55.9 0 1.33.67 1.33 1.48 0 .9-.57 2.26-.87 3.51-.25 1.05.52 1.9 1.54 1.9 1.85 0 3.28-1.95 3.28-4.77 0-2.49-1.79-4.23-4.35-4.23-2.96 0-4.7 2.22-4.7 4.51 0 .89.34 1.85.77 2.37.08.1.09.19.07.29-.08.32-.25 1.05-.29 1.2-.05.19-.16.23-.37.14C7.6 15.22 7 13.66 7 12.19c0-3.16 2.3-6.06 6.63-6.06 3.48 0 6.19 2.48 6.19 5.79 0 3.46-2.18 6.24-5.2 6.24-1.02 0-1.97-.53-2.3-1.15l-.62 2.33c-.23.87-.84 1.96-1.25 2.62.94.29 1.94.45 2.97.45 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            The Stable Heirloom
+          </a>
+          <a href="https://facebook.com/thestableheirloom" target="_blank" style="display:flex;align-items:center;gap:10px;color:rgba(234,221,202,0.75);text-decoration:none;font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(234,221,202,0.75)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            The Stable Heirloom
+          </a>
+          <a href="https://tiktok.com/@thestableheirloom" target="_blank" style="display:flex;align-items:center;gap:10px;color:rgba(234,221,202,0.75);text-decoration:none;font-size:1rem;transition:color 0.2s;" onmouseover="this.style.color='#c5a059'" onmouseout="this.style.color='rgba(234,221,202,0.75)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            @thestableheirloom
+          </a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(197,160,89,0.15);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <span style="font-family:'Great Vibes',cursive;color:rgba(197,160,89,0.5);font-size:1.4rem;">The Stable Heirloom</span>
+      <span style="color:rgba(234,221,202,0.3);font-size:0.8rem;letter-spacing:1px;">© 2025 Jenna · All rights reserved</span>
+    </div>
+  </div>
+</footer>
 </body>
 </html>

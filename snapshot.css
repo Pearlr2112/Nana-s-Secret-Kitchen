@@ -1,0 +1,18 @@
+.recent-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--sepia);
+    opacity: 0.6;
+    text-align: center;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+.recent-label::before, .recent-label::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dotted rgba(93,64,55,0.3);
+}
